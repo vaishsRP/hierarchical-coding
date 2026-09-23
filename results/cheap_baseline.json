@@ -1,0 +1,76 @@
+{
+  "protocol": {
+    "embed_model": "BAAI/bge-small-en-v1.5",
+    "c_grid": [
+      0.01,
+      0.1,
+      1.0,
+      10.0
+    ],
+    "selection": "dev log-loss",
+    "class_weight": null,
+    "min_leaf_units": 100
+  },
+  "data": {
+    "modelled_units": 140842,
+    "leaves": 63,
+    "split_units": {
+      "train": 86414,
+      "calib": 19509,
+      "test": 26428,
+      "dev": 8491
+    },
+    "sparse_set_aside": {
+      "415": 82,
+      "606.2": 65,
+      "000": 65,
+      "102": 64,
+      "608.2": 53,
+      "703.2": 40,
+      "608.3": 36,
+      "416.1": 31,
+      "202.2": 27,
+      "103.2": 26,
+      "608.1": 14,
+      "305.6": 4,
+      "305.4": 0,
+      "305.5": 0
+    }
+  },
+  "versions": {
+    "python": "3.12.4",
+    "sklearn": "1.9.1"
+  },
+  "majority_class": {
+    "alpha_leaf": -0.28769598110222594,
+    "macro_f1_leaf": 0.004016519352320515,
+    "accuracy_leaf": 0.144846375056758,
+    "alpha_category": -0.28838163704503494,
+    "accuracy_category": 0.144846375056758,
+    "alpha_domain": -0.25194769465943123,
+    "accuracy_domain": 0.3596185863478129
+  },
+  "tfidf_reference": {
+    "C": 10.0,
+    "dev_log_loss": 2.008653187755482,
+    "alpha_leaf": 0.45213174301260317,
+    "macro_f1_leaf": 0.27030743639928545,
+    "accuracy_leaf": 0.48743756621764794,
+    "alpha_category": 0.4588712952432561,
+    "accuracy_category": 0.4942485242924171,
+    "alpha_domain": 0.5101502738039416,
+    "accuracy_domain": 0.6339488421371273
+  },
+  "cheap_baseline": {
+    "C": 0.01,
+    "dev_log_loss": 1.8127009868621826,
+    "test_log_loss": 1.8500702381134033,
+    "alpha_leaf": 0.4754836684614768,
+    "macro_f1_leaf": 0.30213828323135505,
+    "accuracy_leaf": 0.506243378235205,
+    "alpha_category": 0.48514982549083463,
+    "accuracy_category": 0.5159300741637657,
+    "alpha_domain": 0.5552506714697945,
+    "accuracy_domain": 0.6619116088996518
+  }
+}

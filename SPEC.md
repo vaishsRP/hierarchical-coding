@@ -183,6 +183,40 @@ human and model) over all modelled test units, and macro F1 over the 63
 leaves. Also reported: accuracy, category and domain accuracy derived through
 the table, and per-leaf F1 with its test support.
 
+**Note, 2026-09-23, after step 3.** Both cheap-baseline fits chose a C on
+the edge of the fixed grid (embeddings 0.01, the smallest; TF-IDF 10, the
+largest), with dev log-loss still improving at the edge. The pre-registered
+numbers stay primary. A sensitivity check extends each grid outward (embeddings
+0.001 and 0.003, TF-IDF 30 and 100), selects on dev log-loss only, and is
+reported next to the primary numbers. If the extended choice wins on dev,
+later comparisons against the cheap baseline use both.
+
+**Aggregate experiment (step 4).** Fixed before it was run; full protocol in
+the docstring of `aggregate_experiment.py`. Per test manifesto, true versus
+predicted share of each modelled leaf. Headline estimator is
+classify-and-count (what a practitioner does); probability averaging is
+reported alongside. Per-leaf bias is the mean signed error over test
+documents with a bootstrap CI over documents. Learning curve over 5, 10, 25,
+50 and 100% of train units, 3 seeds below 100%, C re-chosen on dev each time.
+The claim under test is "agreement improves with data, aggregate bias does
+not go away"; it fails if total bias falls roughly in step with alpha.
+
+**Conformal abstention (step 7).** Fixed before it was run; full protocol
+in `conformal_abstention.py`. Split conformal with MAPIE, calibrated on
+calib, evaluated on test, 90% target, LAC and APS scores. An item is
+auto-coded only if its prediction set holds exactly one leaf. Reported:
+empirical coverage, human review load, accuracy of auto-coded items, and
+coverage per leaf and per country, since calib and test are different
+parties and the guarantee is only marginal. First run on the cheap baseline
+to build the pipeline; the number that counts comes from the strong model.
+
+**PPI (step 8).** Fixed before it was run; full protocol in
+`ppi_aggregate.py`. Per test document, compare predictions only,
+labels only and PPI at label budgets of 5, 10 and 20% of the document's
+units (at least 10), 200 draws each. Reported: total bias, RMSE, 95% CI
+coverage (all document and leaf pairs, and pairs with a true share of at
+least 2%) and CI width. Same cheap-first, strong-later rule as step 7.
+
 ## How it gets evaluated
 
 Three separate questions. Keeping them separate is most of the value.

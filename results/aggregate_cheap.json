@@ -1,0 +1,590 @@
+{
+  "test_documents": 24,
+  "curve": [
+    {
+      "alpha_leaf": 0.4203233611368341,
+      "macro_f1_leaf": 0.19580418768160474,
+      "cc_leaf": {
+        "mae": 0.00882927946681828,
+        "total_bias": 0.1920423378991132,
+        "spearman_bias_vs_prevalence": 0.5544967958777464,
+        "labels_with_ci_excluding_zero": 50
+      },
+      "cc_category": {
+        "mae": 0.00986886885880133,
+        "total_bias": 0.16763950272198327,
+        "spearman_bias_vs_prevalence": 0.5391174633707719,
+        "labels_with_ci_excluding_zero": 40
+      },
+      "cc_domain": {
+        "mae": 0.03239502171026124,
+        "total_bias": 0.0635014695699031,
+        "spearman_bias_vs_prevalence": 0.7142857142857144,
+        "labels_with_ci_excluding_zero": 3
+      },
+      "pa_leaf": {
+        "mae": 0.009001909417331738,
+        "total_bias": 0.11199910276449535,
+        "spearman_bias_vs_prevalence": 0.33516549466006623,
+        "labels_with_ci_excluding_zero": 17
+      },
+      "pa_category": {
+        "mae": 0.010030716655602945,
+        "total_bias": 0.09916907520660165,
+        "spearman_bias_vs_prevalence": 0.3003205193425726,
+        "labels_with_ci_excluding_zero": 15
+      },
+      "pa_domain": {
+        "mae": 0.030433815954921936,
+        "total_bias": 0.03447849800933761,
+        "spearman_bias_vs_prevalence": 0.28571428571428575,
+        "labels_with_ci_excluding_zero": 1
+      },
+      "fraction": 0.05,
+      "seed": 0,
+      "train_units": 4320,
+      "C": 0.01,
+      "dev_log_loss": 2.0694393901644443
+    },
+    {
+      "alpha_leaf": 0.4202600405721547,
+      "macro_f1_leaf": 0.19537545699991749,
+      "cc_leaf": {
+        "mae": 0.009035829611111455,
+        "total_bias": 0.19458007131277283,
+        "spearman_bias_vs_prevalence": 0.5235820753734377,
+        "labels_with_ci_excluding_zero": 47
+      },
+      "cc_category": {
+        "mae": 0.010115017400530056,
+        "total_bias": 0.1716755733982055,
+        "spearman_bias_vs_prevalence": 0.5318604230322482,
+        "labels_with_ci_excluding_zero": 38
+      },
+      "cc_domain": {
+        "mae": 0.03244513402907107,
+        "total_bias": 0.06514094202874987,
+        "spearman_bias_vs_prevalence": 0.7142857142857144,
+        "labels_with_ci_excluding_zero": 3
+      },
+      "pa_leaf": {
+        "mae": 0.008976261755033424,
+        "total_bias": 0.10138580024834742,
+        "spearman_bias_vs_prevalence": 0.4229892231734709,
+        "labels_with_ci_excluding_zero": 20
+      },
+      "pa_category": {
+        "mae": 0.009976458735978324,
+        "total_bias": 0.0881998316265212,
+        "spearman_bias_vs_prevalence": 0.3464027254921981,
+        "labels_with_ci_excluding_zero": 15
+      },
+      "pa_domain": {
+        "mae": 0.03130356151325661,
+        "total_bias": 0.0348973460708472,
+        "spearman_bias_vs_prevalence": 0.5357142857142858,
+        "labels_with_ci_excluding_zero": 2
+      },
+      "fraction": 0.05,
+      "seed": 1,
+      "train_units": 4320,
+      "C": 0.01,
+      "dev_log_loss": 2.094495157148522
+    },
+    {
+      "alpha_leaf": 0.42046543444952,
+      "macro_f1_leaf": 0.19858225781295935,
+      "cc_leaf": {
+        "mae": 0.00885502224946729,
+        "total_bias": 0.20804313269612698,
+        "spearman_bias_vs_prevalence": 0.45676019502872106,
+        "labels_with_ci_excluding_zero": 50
+      },
+      "cc_category": {
+        "mae": 0.00999622915298661,
+        "total_bias": 0.18858894065316437,
+        "spearman_bias_vs_prevalence": 0.4844880763779963,
+        "labels_with_ci_excluding_zero": 40
+      },
+      "cc_domain": {
+        "mae": 0.03763529116658383,
+        "total_bias": 0.08300887327219707,
+        "spearman_bias_vs_prevalence": 0.6785714285714287,
+        "labels_with_ci_excluding_zero": 2
+      },
+      "pa_leaf": {
+        "mae": 0.008666218469115725,
+        "total_bias": 0.10226254448944853,
+        "spearman_bias_vs_prevalence": 0.41055612905760763,
+        "labels_with_ci_excluding_zero": 14
+      },
+      "pa_category": {
+        "mae": 0.009686147724324867,
+        "total_bias": 0.09049514042819717,
+        "spearman_bias_vs_prevalence": 0.36063458793385844,
+        "labels_with_ci_excluding_zero": 13
+      },
+      "pa_domain": {
+        "mae": 0.03074795372168772,
+        "total_bias": 0.03856148404573487,
+        "spearman_bias_vs_prevalence": 0.7142857142857144,
+        "labels_with_ci_excluding_zero": 0
+      },
+      "fraction": 0.05,
+      "seed": 2,
+      "train_units": 4320,
+      "C": 0.01,
+      "dev_log_loss": 2.071184014727912
+    },
+    {
+      "alpha_leaf": 0.44319352836056025,
+      "macro_f1_leaf": 0.2292003831983592,
+      "cc_leaf": {
+        "mae": 0.008134955067257789,
+        "total_bias": 0.16799834242744602,
+        "spearman_bias_vs_prevalence": 0.5780668700510624,
+        "labels_with_ci_excluding_zero": 47
+      },
+      "cc_category": {
+        "mae": 0.008910495029414371,
+        "total_bias": 0.1435682007741624,
+        "spearman_bias_vs_prevalence": 0.5615336546386563,
+        "labels_with_ci_excluding_zero": 37
+      },
+      "cc_domain": {
+        "mae": 0.027549598042634734,
+        "total_bias": 0.049014395581808055,
+        "spearman_bias_vs_prevalence": 0.6071428571428572,
+        "labels_with_ci_excluding_zero": 2
+      },
+      "pa_leaf": {
+        "mae": 0.008488059030290682,
+        "total_bias": 0.09086643792313091,
+        "spearman_bias_vs_prevalence": 0.42082903307612013,
+        "labels_with_ci_excluding_zero": 17
+      },
+      "pa_category": {
+        "mae": 0.009345796631791166,
+        "total_bias": 0.07710814874536462,
+        "spearman_bias_vs_prevalence": 0.41034531425274584,
+        "labels_with_ci_excluding_zero": 14
+      },
+      "pa_domain": {
+        "mae": 0.028140088365363174,
+        "total_bias": 0.023752006768321274,
+        "spearman_bias_vs_prevalence": 0.42857142857142866,
+        "labels_with_ci_excluding_zero": 0
+      },
+      "fraction": 0.1,
+      "seed": 0,
+      "train_units": 8641,
+      "C": 0.01,
+      "dev_log_loss": 1.9832237533647674
+    },
+    {
+      "alpha_leaf": 0.4428427280308843,
+      "macro_f1_leaf": 0.23072412967852376,
+      "cc_leaf": {
+        "mae": 0.008191985224575203,
+        "total_bias": 0.1718720010103017,
+        "spearman_bias_vs_prevalence": 0.566425845637561,
+        "labels_with_ci_excluding_zero": 46
+      },
+      "cc_category": {
+        "mae": 0.009132756838914074,
+        "total_bias": 0.1513442799780257,
+        "spearman_bias_vs_prevalence": 0.5238373617691027,
+        "labels_with_ci_excluding_zero": 35
+      },
+      "cc_domain": {
+        "mae": 0.029738737524781997,
+        "total_bias": 0.05835608168630607,
+        "spearman_bias_vs_prevalence": 0.5,
+        "labels_with_ci_excluding_zero": 4
+      },
+      "pa_leaf": {
+        "mae": 0.008421977897560596,
+        "total_bias": 0.09292387892007159,
+        "spearman_bias_vs_prevalence": 0.40501164114107396,
+        "labels_with_ci_excluding_zero": 17
+      },
+      "pa_category": {
+        "mae": 0.009319596824654079,
+        "total_bias": 0.07710726001746314,
+        "spearman_bias_vs_prevalence": 0.37152014844164405,
+        "labels_with_ci_excluding_zero": 12
+      },
+      "pa_domain": {
+        "mae": 0.028764163990674156,
+        "total_bias": 0.028210136952359507,
+        "spearman_bias_vs_prevalence": 0.42857142857142866,
+        "labels_with_ci_excluding_zero": 1
+      },
+      "fraction": 0.1,
+      "seed": 1,
+      "train_units": 8641,
+      "C": 0.01,
+      "dev_log_loss": 1.9970390361990322
+    },
+    {
+      "alpha_leaf": 0.4420983656113565,
+      "macro_f1_leaf": 0.2305000122805348,
+      "cc_leaf": {
+        "mae": 0.0083790414132899,
+        "total_bias": 0.1815178083989117,
+        "spearman_bias_vs_prevalence": 0.5358231525917587,
+        "labels_with_ci_excluding_zero": 50
+      },
+      "cc_category": {
+        "mae": 0.009344292134649927,
+        "total_bias": 0.16426662070341153,
+        "spearman_bias_vs_prevalence": 0.501542121173527,
+        "labels_with_ci_excluding_zero": 42
+      },
+      "cc_domain": {
+        "mae": 0.029926734823816924,
+        "total_bias": 0.060650012306901514,
+        "spearman_bias_vs_prevalence": 0.642857142857143,
+        "labels_with_ci_excluding_zero": 3
+      },
+      "pa_leaf": {
+        "mae": 0.008485006278388205,
+        "total_bias": 0.099517685237416,
+        "spearman_bias_vs_prevalence": 0.41511653037423696,
+        "labels_with_ci_excluding_zero": 17
+      },
+      "pa_category": {
+        "mae": 0.009441766031893882,
+        "total_bias": 0.08347271529290787,
+        "spearman_bias_vs_prevalence": 0.3678513113816126,
+        "labels_with_ci_excluding_zero": 13
+      },
+      "pa_domain": {
+        "mae": 0.028990980440893137,
+        "total_bias": 0.03133137302959493,
+        "spearman_bias_vs_prevalence": 0.42857142857142866,
+        "labels_with_ci_excluding_zero": 1
+      },
+      "fraction": 0.1,
+      "seed": 2,
+      "train_units": 8641,
+      "C": 0.01,
+      "dev_log_loss": 1.9758377671683642
+    },
+    {
+      "alpha_leaf": 0.4612877073344164,
+      "macro_f1_leaf": 0.2712329625694259,
+      "cc_leaf": {
+        "mae": 0.007602240832636755,
+        "total_bias": 0.1497986894116161,
+        "spearman_bias_vs_prevalence": 0.565633775935199,
+        "labels_with_ci_excluding_zero": 44
+      },
+      "cc_category": {
+        "mae": 0.00840221068171567,
+        "total_bias": 0.12636533493484764,
+        "spearman_bias_vs_prevalence": 0.5751204468280035,
+        "labels_with_ci_excluding_zero": 34
+      },
+      "cc_domain": {
+        "mae": 0.026281772510058424,
+        "total_bias": 0.039161234321608125,
+        "spearman_bias_vs_prevalence": 0.5714285714285715,
+        "labels_with_ci_excluding_zero": 2
+      },
+      "pa_leaf": {
+        "mae": 0.008067576745537385,
+        "total_bias": 0.08844584126105316,
+        "spearman_bias_vs_prevalence": 0.3940666779811635,
+        "labels_with_ci_excluding_zero": 14
+      },
+      "pa_category": {
+        "mae": 0.008867762739988088,
+        "total_bias": 0.07034065285078316,
+        "spearman_bias_vs_prevalence": 0.3523293084353258,
+        "labels_with_ci_excluding_zero": 9
+      },
+      "pa_domain": {
+        "mae": 0.026720881030377314,
+        "total_bias": 0.022162562381521703,
+        "spearman_bias_vs_prevalence": 0.39285714285714296,
+        "labels_with_ci_excluding_zero": 1
+      },
+      "fraction": 0.25,
+      "seed": 0,
+      "train_units": 21603,
+      "C": 0.01,
+      "dev_log_loss": 1.8885832135775367
+    },
+    {
+      "alpha_leaf": 0.4636690336823027,
+      "macro_f1_leaf": 0.2758531313516058,
+      "cc_leaf": {
+        "mae": 0.0075762525792525395,
+        "total_bias": 0.14352838539032528,
+        "spearman_bias_vs_prevalence": 0.587427693806249,
+        "labels_with_ci_excluding_zero": 39
+      },
+      "cc_category": {
+        "mae": 0.00838590905040876,
+        "total_bias": 0.12399439241997604,
+        "spearman_bias_vs_prevalence": 0.5601225634617212,
+        "labels_with_ci_excluding_zero": 31
+      },
+      "cc_domain": {
+        "mae": 0.02626585586105951,
+        "total_bias": 0.03975243221623317,
+        "spearman_bias_vs_prevalence": 0.5714285714285715,
+        "labels_with_ci_excluding_zero": 1
+      },
+      "pa_leaf": {
+        "mae": 0.007978230950696424,
+        "total_bias": 0.08782949835806697,
+        "spearman_bias_vs_prevalence": 0.3601516934527566,
+        "labels_with_ci_excluding_zero": 16
+      },
+      "pa_category": {
+        "mae": 0.008814500637261313,
+        "total_bias": 0.0723618481483807,
+        "spearman_bias_vs_prevalence": 0.32874392733512375,
+        "labels_with_ci_excluding_zero": 10
+      },
+      "pa_domain": {
+        "mae": 0.027164007132611447,
+        "total_bias": 0.02208341127362464,
+        "spearman_bias_vs_prevalence": 0.5357142857142858,
+        "labels_with_ci_excluding_zero": 1
+      },
+      "fraction": 0.25,
+      "seed": 1,
+      "train_units": 21603,
+      "C": 0.01,
+      "dev_log_loss": 1.893708708272932
+    },
+    {
+      "alpha_leaf": 0.4625800786648162,
+      "macro_f1_leaf": 0.2691901254936134,
+      "cc_leaf": {
+        "mae": 0.0077391513820642445,
+        "total_bias": 0.15472359023629267,
+        "spearman_bias_vs_prevalence": 0.5709382427298049,
+        "labels_with_ci_excluding_zero": 43
+      },
+      "cc_category": {
+        "mae": 0.008543931222273475,
+        "total_bias": 0.13622107116054316,
+        "spearman_bias_vs_prevalence": 0.5376660553030671,
+        "labels_with_ci_excluding_zero": 34
+      },
+      "cc_domain": {
+        "mae": 0.026462308473182056,
+        "total_bias": 0.04282574667722187,
+        "spearman_bias_vs_prevalence": 0.3214285714285715,
+        "labels_with_ci_excluding_zero": 2
+      },
+      "pa_leaf": {
+        "mae": 0.007983014860261279,
+        "total_bias": 0.08944014739201651,
+        "spearman_bias_vs_prevalence": 0.40465160945818224,
+        "labels_with_ci_excluding_zero": 15
+      },
+      "pa_category": {
+        "mae": 0.008831581881342072,
+        "total_bias": 0.07360017987786861,
+        "spearman_bias_vs_prevalence": 0.39591186735723755,
+        "labels_with_ci_excluding_zero": 10
+      },
+      "pa_domain": {
+        "mae": 0.026549677234493804,
+        "total_bias": 0.022462308967618753,
+        "spearman_bias_vs_prevalence": 0.39285714285714296,
+        "labels_with_ci_excluding_zero": 1
+      },
+      "fraction": 0.25,
+      "seed": 2,
+      "train_units": 21603,
+      "C": 0.01,
+      "dev_log_loss": 1.8762953667675784
+    },
+    {
+      "alpha_leaf": 0.4698564850935797,
+      "macro_f1_leaf": 0.2893872901601135,
+      "cc_leaf": {
+        "mae": 0.007298080568980808,
+        "total_bias": 0.13560679674198042,
+        "spearman_bias_vs_prevalence": 0.5678899744813211,
+        "labels_with_ci_excluding_zero": 35
+      },
+      "cc_category": {
+        "mae": 0.008037824236925608,
+        "total_bias": 0.11435752653914726,
+        "spearman_bias_vs_prevalence": 0.5856834722096325,
+        "labels_with_ci_excluding_zero": 27
+      },
+      "cc_domain": {
+        "mae": 0.024637108761107356,
+        "total_bias": 0.03407128855432472,
+        "spearman_bias_vs_prevalence": 0.5714285714285715,
+        "labels_with_ci_excluding_zero": 1
+      },
+      "pa_leaf": {
+        "mae": 0.007767604662475937,
+        "total_bias": 0.08369686679337807,
+        "spearman_bias_vs_prevalence": 0.32143628648579253,
+        "labels_with_ci_excluding_zero": 14
+      },
+      "pa_category": {
+        "mae": 0.00854216803228218,
+        "total_bias": 0.06570938964292718,
+        "spearman_bias_vs_prevalence": 0.3079404116980224,
+        "labels_with_ci_excluding_zero": 9
+      },
+      "pa_domain": {
+        "mae": 0.026121744552706137,
+        "total_bias": 0.02384967119121862,
+        "spearman_bias_vs_prevalence": 0.10714285714285716,
+        "labels_with_ci_excluding_zero": 1
+      },
+      "fraction": 0.5,
+      "seed": 0,
+      "train_units": 43207,
+      "C": 0.01,
+      "dev_log_loss": 1.8398928351556942
+    },
+    {
+      "alpha_leaf": 0.47267648022023656,
+      "macro_f1_leaf": 0.2890424141192338,
+      "cc_leaf": {
+        "mae": 0.007375106729348727,
+        "total_bias": 0.13205383896108286,
+        "spearman_bias_vs_prevalence": 0.5885317909671172,
+        "labels_with_ci_excluding_zero": 37
+      },
+      "cc_category": {
+        "mae": 0.008069836960449387,
+        "total_bias": 0.11265486075822305,
+        "spearman_bias_vs_prevalence": 0.5655250268248443,
+        "labels_with_ci_excluding_zero": 26
+      },
+      "cc_domain": {
+        "mae": 0.024459117256459367,
+        "total_bias": 0.034781949991610495,
+        "spearman_bias_vs_prevalence": 0.4642857142857144,
+        "labels_with_ci_excluding_zero": 2
+      },
+      "pa_leaf": {
+        "mae": 0.00774367088240046,
+        "total_bias": 0.08641610170553288,
+        "spearman_bias_vs_prevalence": 0.3377577227768871,
+        "labels_with_ci_excluding_zero": 16
+      },
+      "pa_category": {
+        "mae": 0.008519758243699332,
+        "total_bias": 0.07051181845880249,
+        "spearman_bias_vs_prevalence": 0.26080996638838794,
+        "labels_with_ci_excluding_zero": 10
+      },
+      "pa_domain": {
+        "mae": 0.025880645822958497,
+        "total_bias": 0.02150578398607323,
+        "spearman_bias_vs_prevalence": 0.10714285714285716,
+        "labels_with_ci_excluding_zero": 1
+      },
+      "fraction": 0.5,
+      "seed": 1,
+      "train_units": 43207,
+      "C": 0.01,
+      "dev_log_loss": 1.8451016994527636
+    },
+    {
+      "alpha_leaf": 0.4740841520362752,
+      "macro_f1_leaf": 0.2915965065491148,
+      "cc_leaf": {
+        "mae": 0.0073004397863058726,
+        "total_bias": 0.135404527903583,
+        "spearman_bias_vs_prevalence": 0.5593212204284963,
+        "labels_with_ci_excluding_zero": 35
+      },
+      "cc_category": {
+        "mae": 0.008086788125247078,
+        "total_bias": 0.11796232981364006,
+        "spearman_bias_vs_prevalence": 0.5500030238785575,
+        "labels_with_ci_excluding_zero": 28
+      },
+      "cc_domain": {
+        "mae": 0.025566439727780537,
+        "total_bias": 0.038451593567313765,
+        "spearman_bias_vs_prevalence": 0.6785714285714287,
+        "labels_with_ci_excluding_zero": 1
+      },
+      "pa_leaf": {
+        "mae": 0.007804791333013219,
+        "total_bias": 0.08464882559383012,
+        "spearman_bias_vs_prevalence": 0.33406139749919805,
+        "labels_with_ci_excluding_zero": 13
+      },
+      "pa_category": {
+        "mae": 0.008617065801811628,
+        "total_bias": 0.06798260653540628,
+        "spearman_bias_vs_prevalence": 0.31499586758269826,
+        "labels_with_ci_excluding_zero": 8
+      },
+      "pa_domain": {
+        "mae": 0.026277329962095593,
+        "total_bias": 0.02257352026211769,
+        "spearman_bias_vs_prevalence": 0.10714285714285716,
+        "labels_with_ci_excluding_zero": 1
+      },
+      "fraction": 0.5,
+      "seed": 2,
+      "train_units": 43207,
+      "C": 0.01,
+      "dev_log_loss": 1.8349538479152814
+    },
+    {
+      "alpha_leaf": 0.4754836684614768,
+      "macro_f1_leaf": 0.30213828323135505,
+      "cc_leaf": {
+        "mae": 0.007251007834081479,
+        "total_bias": 0.12621785014118542,
+        "spearman_bias_vs_prevalence": 0.5713942828614678,
+        "labels_with_ci_excluding_zero": 32
+      },
+      "cc_category": {
+        "mae": 0.00799472984767493,
+        "total_bias": 0.10834577766773762,
+        "spearman_bias_vs_prevalence": 0.5616949222017347,
+        "labels_with_ci_excluding_zero": 25
+      },
+      "cc_domain": {
+        "mae": 0.02504069638990952,
+        "total_bias": 0.0354944304195442,
+        "spearman_bias_vs_prevalence": 0.6785714285714287,
+        "labels_with_ci_excluding_zero": 1
+      },
+      "pa_leaf": {
+        "mae": 0.007607325577194656,
+        "total_bias": 0.08348585515378362,
+        "spearman_bias_vs_prevalence": 0.3324292538700886,
+        "labels_with_ci_excluding_zero": 15
+      },
+      "pa_category": {
+        "mae": 0.008367805260258609,
+        "total_bias": 0.06789154591070519,
+        "spearman_bias_vs_prevalence": 0.28560485421167725,
+        "labels_with_ci_excluding_zero": 9
+      },
+      "pa_domain": {
+        "mae": 0.02547415669065991,
+        "total_bias": 0.0215574227570786,
+        "spearman_bias_vs_prevalence": 0.10714285714285716,
+        "labels_with_ci_excluding_zero": 1
+      },
+      "fraction": 1.0,
+      "seed": 0,
+      "train_units": 86414,
+      "C": 0.01,
+      "dev_log_loss": 1.812700993187074
+    }
+  ]
+}
