@@ -96,10 +96,57 @@ the number that matters needs the strong model.
   intervals collapse for rare leaves and undercover badly (68% at 5%); PPI
   gets close to nominal at 10 to 20%.
 
+## Step 5: strong flat baseline (DeBERTa v3 base)
+
+Fine tuned on all 63 leaves, 3 seeds on Kaggle T4 GPUs, protocol as fixed in
+SPEC.md. Mean and standard deviation over seeds; scored by `evaluate_probs.py`
+with the same code as everything above.
+
+| Test set | Cheap baseline | DeBERTa, raw | DeBERTa, temperature scaled | DeBERTa, temperature and frequency adjusted |
+|---|---|---|---|---|
+| alpha, leaf | 0.475 | **0.483** (0.002) | 0.483 | 0.433 (0.003) |
+| Macro F1 | **0.302** | 0.239 (0.002) | 0.239 | 0.265 (0.005) |
+| Accuracy | 50.6% | **51.4%** | 51.4% | 45.8% |
+| alpha, domain | 0.555 | **0.575** | 0.575 | 0.554 |
+| Wrong category, counting top guesses | **12.6%** | 16.5% | 16.5% | 16.7% |
+| Wrong category, averaging probabilities | **8.3%** | 10.2% | 10.5% | 31.0% |
+| Human review load at 90% | 97.3% | 97.6% | 99.0% | 100% |
+
+What happened:
+
+1. **The strong model is only stronger on common categories.** It never
+   predicts 17 of the 63 leaves and scores F1 0 on 20. By training frequency,
+   the rarest third of leaves gets F1 0.03 against 0.16 for the cheap model,
+   while the commonest third is level (0.50 and 0.49). It is also overconfident:
+   mean top probability 0.65 at 51% accuracy.
+2. **A better model by the usual measure produced worse percentages.** Agreement
+   rose from 0.475 to 0.483, but the content counted in the wrong category rose
+   from 12.6% to 16.5%. Leaning on common categories is exactly what inflates
+   their share. This is the project's central claim shown directly: item level
+   quality and aggregate quality are different things and can move in
+   opposite directions.
+3. **The standard fixes do not rescue the aggregate.** Both were applied to the
+   saved probabilities and tuned on dev only, as recorded in a dated note in
+   SPEC.md. Temperature scaling (T about 1.2) leaves predictions unchanged and
+   makes the review load worse, because softer probabilities mean larger sets.
+   Adjusting for class frequency (tau 0.75 on every seed) buys macro F1 at
+   the cost of agreement, and ruins the averaged shares, because the adjusted
+   probabilities no longer estimate frequencies.
+4. **Conformal review at 90% is impractical at this level of agreement.**
+   Every model passes 97 to 100% of sentences to a person.
+5. **PPI behaves as with the cheap model.** It removes the bias, and its
+   intervals hold 88, 92 and 96% of the time at 5, 10 and 20% labelled, but its
+   error is no lower than the hand checked sample alone (RMSE 0.024 against
+   0.023 at 5%).
+
+The practical reading: at alpha around 0.48, no per sentence adjustment gets
+the percentages right, and the reliable route is correcting them with a small
+hand checked sample. Whether a model can also make that sample smaller needs
+agreement well above what either model reaches here.
+
 ## What is pending
 
-- Step 5, strong flat baseline (DeBERTa-v3-base, 3 seeds) on a Kaggle GPU.
-- Steps 7 and 8 rerun on the strong model; that is where review load and PPI
-  efficiency are decided.
-- Step 6 structured variants, step 9 GoEmotions, and the human-ceiling
-  comparison against published coder reliability.
+- Step 6 structured variants (hierarchy in the output, hierarchy in the
+  input), running on Kaggle with the same recipe as the flat model.
+- The human ceiling: comparing these alphas with published agreement between
+  human coders on this scheme.

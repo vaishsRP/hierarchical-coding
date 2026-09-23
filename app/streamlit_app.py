@@ -191,9 +191,17 @@ f2.metric(f"Model plus {budget} checked", pct(row["with_checks"], 1),
 f3.metric("Error margins that hold", pct(row["interval_hit_rate"]),
           help="How often the 95% margin contains the true share, for topics above 2% of a manifesto")
 st.caption(
-    "With this small model, checking a sample by hand removes almost all of the bias. It does not yet "
-    "save effort compared with just coding the sample and ignoring the model, because the model's "
-    "guesses are too rough to add much. A stronger model is being trained to test exactly that."
+    "Checking a sample by hand removes almost all of the bias. It does not yet save effort compared "
+    "with just coding the sample and ignoring the model, because the model's guesses are too rough to "
+    "add much. A larger fine tuned model did not change that."
+)
+
+st.header("A better model, worse percentages")
+st.write(
+    "A much larger model, fine tuned on the same data, agreed with the experts slightly more often. "
+    "Its percentages were further off, not closer: 16.5% of the content landed in the wrong category, "
+    "against 12.6% for the small model. It got better by betting on common topics, and every such bet "
+    "inflates their share. It never predicted 17 of the 63 categories at all."
 )
 
 st.header("How sure is the model, sentence by sentence?")

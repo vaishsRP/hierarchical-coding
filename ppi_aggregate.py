@@ -42,28 +42,12 @@ DRAWS = 200
 Z = 1.959964
 
 
-def main():
-    units, keep, _, _, _ = bc.load()
-    y = np.array([u["cmp_code"] for u in units])
-    doc = np.array([u["manifesto_id"] for u in units])
-    split = np.array([u["split"] for u in units])
-    x = bc.embed([u["text"] or "" for u in units])
-    tr, te = (np.where(split == s)[0] for s in ("train", "test"))
-
-    c = json.loads((bc.RESULTS / "cheap_baseline.json").read_text())["cheap_baseline"]["C"]
-    scaler = StandardScaler().fit(x[tr])
-    clf = LogisticRegression(C=c, max_iter=3000).fit(scaler.transform(x[tr]), y[tr])
-    pred = clf.predict(scaler.transform(x[te]))
-
-    col = {k: j for j, k in enumerate(keep)}
-    Y = np.zeros((len(te), len(keep)))
-    F = np.zeros((len(te), len(keep)))
-    Y[np.arange(len(te)), [col[v] for v in y[te]]] = 1
-    F[np.arange(len(te)), [col[v] for v in pred]] = 1
-    docs = sorted(set(doc[te]))
-    rows_of = {d: np.where(doc[te] == d)[0] for d in docs}
-
-    out = {"test_documents": len(docs), "draws": DRAWS, "budgets": {}}
+def ppi_budgets(Y, F, doc_ids, verbose=True):
+    """Y, F: (units, leaves) 0/1 matrices of human codes and model predictions
+    for the test units; doc_ids: manifesto id per unit. Returns results per budget."""
+    docs = sorted(set(doc_ids))
+    rows_of = {d: np.where(doc_ids == d)[0] for d in docs}
+    out = {}
     for budget in BUDGETS:
         err = {"cc": [], "labels": [], "ppi": []}
         cover = {"labels": [], "ppi": []}
@@ -102,12 +86,38 @@ def main():
                 res[name]["ci95_coverage"] = float(cv.mean())
                 res[name]["ci95_coverage_share_ge_2pct"] = float(cv[np.array(big)].mean())
                 res[name]["mean_ci_width"] = float(np.mean(width[name]))
-        out["budgets"][str(budget)] = res
-        print(f"budget {budget:.0%}: " + " | ".join(
+        out[str(budget)] = res
+        if verbose:
+            print(f"budget {budget:.0%}: " + " | ".join(
             f"{k} bias={v['total_bias']:.4f} rmse={v['rmse']:.4f}"
             + (f" cov={v['ci95_coverage']:.3f}/{v['ci95_coverage_share_ge_2pct']:.3f} width={v['mean_ci_width']:.4f}" if "ci95_coverage" in v else "")
             for k, v in res.items()), flush=True)
+    return out
 
+
+def indicators(labels_true, labels_pred, keep):
+    col = {k: j for j, k in enumerate(keep)}
+    Y = np.zeros((len(labels_true), len(keep)))
+    F = np.zeros((len(labels_true), len(keep)))
+    Y[np.arange(len(labels_true)), [col[v] for v in labels_true]] = 1
+    F[np.arange(len(labels_true)), [col[v] for v in labels_pred]] = 1
+    return Y, F
+
+
+def main():
+    units, keep, _, _, _ = bc.load()
+    y = np.array([u["cmp_code"] for u in units])
+    doc = np.array([u["manifesto_id"] for u in units])
+    split = np.array([u["split"] for u in units])
+    x = bc.embed([u["text"] or "" for u in units])
+    tr, te = (np.where(split == s)[0] for s in ("train", "test"))
+
+    c = json.loads((bc.RESULTS / "cheap_baseline.json").read_text())["cheap_baseline"]["C"]
+    scaler = StandardScaler().fit(x[tr])
+    clf = LogisticRegression(C=c, max_iter=3000).fit(scaler.transform(x[tr]), y[tr])
+    pred = clf.predict(scaler.transform(x[te]))
+    Y, F = indicators(y[te], pred, keep)
+    out = {"test_documents": len(set(doc[te])), "draws": DRAWS, "budgets": ppi_budgets(Y, F, doc[te])}
     (bc.RESULTS / "ppi_cheap.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
     print("wrote results/ppi_cheap.json")
 

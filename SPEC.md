@@ -201,6 +201,30 @@ documents with a bootstrap CI over documents. Learning curve over 5, 10, 25,
 The claim under test is "agreement improves with data, aggregate bias does
 not go away"; it fails if total bias falls roughly in step with alpha.
 
+**Note, 2026-09-24, after step 5.** The pre-registered flat DeBERTa never
+predicts 17 of the 63 leaves (rarest third of leaves: F1 0.03, against 0.16
+for the cheap baseline) and is overconfident (mean top probability 0.65 at
+accuracy 0.51). It stays the reference for step 6, whose variants use the same
+recipe. Added as a secondary analysis, applied to saved probabilities with no
+retraining and tuned on dev only, per seed: (1) temperature scaling, T chosen
+by dev log loss; (2) logit adjustment for class frequency (Menon et al., 2021),
+log p minus tau times log train prior, tau from {0, 0.25, 0.5, 0.75, 1} chosen
+by dev macro F1, applied on top of (1). Both are reported next to the raw
+numbers, and the same treatment is applied to every step 6 variant.
+
+**Structured variants (step 6).** Fixed before any variant was trained;
+full protocol in `train_structured.py`. Two variants, chosen on 2026-09-23 to
+keep scope: hierarchy in the output (p(leaf) = p(domain) x p(leaf | domain),
+trained jointly; the strict domain first decode reported alongside) and
+hierarchy in the input (a dual encoder scoring each sentence against the
+handbook definition of every leaf). The decode time constraint variant is
+dropped: under single labels every leaf already implies its parents, so it
+cannot change a prediction. Each variant uses the flat baseline's encoder,
+hyperparameters, seeds 0 to 2 and dev log loss epoch selection. A variant
+counts as better only if its mean over seeds beats the flat baseline's mean
+by more than the larger of the two seed standard deviations, on alpha and on
+macro F1. Anything smaller is reported as no difference.
+
 **Conformal abstention (step 7).** Fixed before it was run; full protocol
 in `conformal_abstention.py`. Split conformal with MAPIE, calibrated on
 calib, evaluated on test, 90% target, LAC and APS scores. An item is

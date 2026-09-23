@@ -13,10 +13,14 @@ Short answer: no, not on their own. A model that codes 51% of sentences
 correctly still puts 12.6% of each manifesto's content in the wrong category,
 and more training data shrinks that error but does not remove it. Checking a
 random 5% of each manifesto by hand and correcting for the gap brings it under
-1%, with error margins that mostly hold. The catch, with the model tested so
-far, is that it does not yet save effort compared with coding that sample by
-hand and ignoring the model. A stronger model is being trained to test exactly
-that.
+1%, with error margins that mostly hold.
+
+The most striking result came from the larger model. A fine tuned DeBERTa
+agrees with the experts slightly more often than the small model, yet it puts
+16.5% of the content in the wrong category instead of 12.6%. It gets better by
+leaning on common topics, and that is exactly what skews the percentages. The
+usual fixes for this, applied afterwards, made the percentages no better or
+worse. Neither model is yet good enough to reduce the hand checking itself.
 
 Data: 111 English election manifestos from 7 countries (2014 to 2024), about
 141,000 sentences, each coded by a trained expert into one of 63 policy
@@ -65,7 +69,7 @@ saw in training.
 | Always guess the most common category | -0.29 | 0.00 | 14.5% |
 | TF IDF and logistic regression (reference) | 0.452 | 0.270 | 48.7% |
 | **Sentence embeddings and logistic regression** | **0.475** | **0.302** | **50.6%** |
-| DeBERTa v3 base, fine tuned, 3 seeds | pending | pending | pending |
+| DeBERTa v3 base, fine tuned, mean of 3 seeds | **0.483** | 0.239 | **51.4%** |
 
 Agreement is measured with Krippendorff's alpha, the same statistic used to
 report agreement between human coders, so the model can later be compared
@@ -100,6 +104,25 @@ Four things stand out.
    removes a third of the error for free.** It is a sensible first fix, but it
    still leaves 8.3%.
 
+**A better model, worse percentages**
+
+| | Small model | Fine tuned DeBERTa |
+|---|---|---|
+| Agreement with experts (alpha) | 0.475 | 0.483 |
+| Macro F1 | 0.302 | 0.239 |
+| Content in the wrong category, counting top guesses | 12.6% | 16.5% |
+| Same, averaging probabilities | 8.3% | 10.2% |
+
+The fine tuned model never predicts 17 of the 63 categories. On the rarest
+third of categories its F1 is 0.03, against 0.16 for the small model, while on
+the commonest third the two are level. It wins on agreement by betting on
+common topics, and every such bet inflates their share. Two standard fixes
+were tried afterwards, both tuned on the tuning data only. Rescaling its
+confidence changed nothing that matters here. Adjusting for how common each
+category is lifted macro F1 to 0.265 but cut agreement to 0.433 and made the
+averaged percentages far worse, because the adjusted probabilities no longer
+reflect real frequencies. Details are in `RESULTS.md`.
+
 **The fix: check a sample by hand**
 
 | Checked by hand per manifesto | Model only | Hand checks only | Model plus hand checks | Error margins that hold |
@@ -119,7 +142,8 @@ With this model the corrected numbers are no better than using the hand
 checked sample alone, because the model's guesses carry too little information
 at this accuracy. What the correction does buy is honest error margins: margins
 from the sample alone collapse for rare categories and held only 74% of the time
-at 5%. Whether a stronger model also saves effort is the open question.
+at 5%. The fine tuned model gives the same picture: bias removed, margins
+honest, but no less error than the hand checked sample alone.
 
 **Human review**
 
@@ -127,7 +151,7 @@ Asked to be right 90% of the time and to pass anything uncertain to a person
 (split conformal prediction), the model was right 90.2% of the time, but it
 passed 97% of sentences on. The few it coded alone were 90.5% correct. A weak
 model is honest about being unsure; it is just unsure about almost everything.
-This is the number I expect the stronger model to move most.
+The fine tuned model did no better, at 97.6%.
 
 ## How it works
 
