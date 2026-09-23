@@ -97,8 +97,12 @@ class DefsModel(nn.Module):
     def __init__(self, name, def_batch):
         super().__init__()
         self.encoder = AutoModel.from_pretrained(name).float()
+        # 63 definitions pass through the encoder with gradients every step; recomputing
+        # activations instead of storing them makes this fit on a 16 GB GPU (same maths)
+        self.encoder.gradient_checkpointing_enable()
         self.def_batch = def_batch                                                 # tokenised definitions
         self.log_scale = nn.Parameter(torch.tensor(math.log(1 / 0.05)))           # temperature 0.05 at start
+        self.def_cache = None                                                      # eval only
 
     def embed(self, ids, mask):
         h = self.encoder(input_ids=ids, attention_mask=mask).last_hidden_state
@@ -107,7 +111,10 @@ class DefsModel(nn.Module):
 
     def forward(self, input_ids, attention_mask, **_):
         s = self.embed(input_ids, attention_mask)
-        d = self.embed(self.def_batch["input_ids"], self.def_batch["attention_mask"])
+        if self.training or self.def_cache is None:
+            d = self.embed(self.def_batch["input_ids"], self.def_batch["attention_mask"])
+        else:
+            d = self.def_cache
         logits = (s @ d.T).float() * self.log_scale.exp().clamp(max=100)
         return torch.log_softmax(logits, dim=-1), None
 
@@ -115,6 +122,11 @@ class DefsModel(nn.Module):
 @torch.no_grad()
 def predict(model, loader, device, amp):
     model.eval()
+    if isinstance(model, DefsModel):
+        # definitions do not change during evaluation: encode them once
+        model.def_cache = None
+        with torch.autocast(device_type=device.type, enabled=amp):
+            model.def_cache = model.embed(model.def_batch["input_ids"], model.def_batch["attention_mask"])
     leaf_out, dom_out, loss_sum, n = [], [], 0.0, 0
     for enc in loader:
         enc = {k: v.to(device) for k, v in enc.items()}
@@ -125,6 +137,8 @@ def predict(model, loader, device, amp):
         leaf_out.append(log_leaf.float().exp().cpu().numpy())
         if log_pd is not None:
             dom_out.append(log_pd.float().exp().cpu().numpy())
+    if isinstance(model, DefsModel):
+        model.def_cache = None
     return np.vstack(leaf_out), (np.vstack(dom_out) if dom_out else None), loss_sum / n
 
 
