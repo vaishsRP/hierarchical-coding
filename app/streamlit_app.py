@@ -57,10 +57,8 @@ ppi5 = summary["ppi"]["0.05"]
 
 st.title("Can you trust the percentages?")
 st.write(
-    "Researchers often turn large amounts of text into percentages: how much of a party manifesto "
-    "is about the economy, or how many survey answers mention price. Doing that by hand is slow, so "
-    "the obvious move is to let a model do the coding. This page shows what happens to the "
-    "percentages when you do, and a cheap way to fix them."
+    "When a model codes text, people report percentages: how much of a manifesto is about the economy. "
+    "This page shows how far off those percentages get, and a cheap fix."
 )
 st.caption(
     f"Tested on {summary['test']['manifestos']} English election manifestos "
@@ -77,8 +75,7 @@ k4.metric("Sentences a person still needs to see", pct(summary["review"]["review
 # ---------------------------------------------------------------- try it
 st.header("Try it")
 st.write(
-    "Type a sentence the way it might appear in a manifesto. The model suggests the policy "
-    "category and says whether it is sure enough to code it on its own."
+    "Type a manifesto style sentence. The model picks a category and says if it is sure enough to decide alone."
 )
 text = st.text_area("Your sentence", value="Every child deserves a free, high quality school place.",
                     label_visibility="collapsed")
@@ -107,16 +104,13 @@ if st.button("Classify", type="primary") and text.strip():
     else:
         st.warning(f"Send to a person. {plausible} categories are still plausible at the 90% level, "
                    "so the model should not decide this one alone.", icon=":material/person_search:")
-    st.caption("This box uses the smaller of the two models in the project, so its guesses are rough. "
-               "That is part of the point.")
+    st.caption("Uses the small model, so guesses are rough.")
 
 # ---------------------------------------------------------------- the drift
 st.header("Why the percentages drift")
 st.write(
-    "A model that gets half the sentences right sounds like it should give roughly the right "
-    "percentages, because the mistakes might cancel out. They do not. The model leans towards the "
-    "categories it saw most often in training, so common topics get counted too often and rare ones "
-    "too rarely. More training data shrinks the problem, but it levels off well above zero."
+    "The mistakes do not cancel out. Common topics get counted too often, rare ones too rarely. "
+    "More training data helps, then levels off."
 )
 
 curve = pd.DataFrame(summary["learning_curve"])
@@ -141,8 +135,7 @@ lines = base.mark_line(strokeWidth=2) + base.mark_point(size=64, filled=True, st
 ends = base.transform_filter(alt.datum.train_sentences == int(curve["train_sentences"].max())).mark_text(
     align="left", dx=8, fontSize=12).encode(text=alt.Text("wrong:Q", format=".1%"))
 st.altair_chart((lines + ends).properties(height=320), use_container_width=True)
-st.caption("Counting each sentence's top guess is what most people do. Averaging the model's "
-           "probabilities instead already removes about a third of the error, at no extra cost.")
+st.caption("Averaging the model's probabilities instead of counting top guesses removes a third of the error.")
 with st.expander("Show the numbers"):
     st.dataframe(curve.rename(columns={"train_sentences": "Training sentences",
                                        "count_top_guess": "Wrong, top guess",
@@ -166,9 +159,7 @@ bars = alt.Chart(bias).mark_bar(cornerRadiusEnd=4, size=14).encode(
 )
 zero = alt.Chart(pd.DataFrame({"x": [0]})).mark_rule(color=c["mid"]).encode(x="x:Q")
 st.altair_chart((bars + zero).properties(height=380), use_container_width=True)
-st.caption("The twelve categories with the largest error. Welfare, market regulation and infrastructure "
-           "are inflated. Political corruption is the biggest undercount: it was rare in the training parties "
-           "and common in the test parties.")
+st.caption("The twelve largest errors. Political corruption was rare in training and common in test.")
 with st.expander("Show the numbers"):
     st.dataframe(bias[["name", "bias_points", "true_share"]].rename(
         columns={"name": "Category", "bias_points": "Points off", "true_share": "True share (%)"}),
@@ -177,10 +168,8 @@ with st.expander("Show the numbers"):
 # ---------------------------------------------------------------- the fix
 st.header("The fix: check a small sample by hand")
 st.write(
-    "Instead of trusting the model's percentages, a person codes a small random sample of each "
-    "manifesto. The gap between the model and the person on that sample tells you how far off the "
-    "model is, and you correct the full count by that amount. The method is called prediction "
-    "powered inference, and it comes with an error margin you can actually trust."
+    "A person codes a small random sample. The gap between model and person on that sample "
+    "corrects the full count (prediction powered inference)."
 )
 budget = st.select_slider("Share of each manifesto checked by hand", options=["5%", "10%", "20%"], value="5%")
 row = summary["ppi"][str(int(budget[:-1]) / 100)]
@@ -191,26 +180,19 @@ f2.metric(f"Model plus {budget} checked", pct(row["with_checks"], 1),
 f3.metric("Error margins that hold", pct(row["interval_hit_rate"]),
           help="How often the 95% margin contains the true share, for topics above 2% of a manifesto")
 st.caption(
-    "Checking a sample by hand removes almost all of the bias. It does not yet save effort compared "
-    "with just coding the sample and ignoring the model, because the model's guesses are too rough to "
-    "add much. A larger fine tuned model did not change that."
+    "This removes almost all the bias. At this accuracy the model adds little over the hand checked sample alone."
 )
 
 st.header("A better model, worse percentages")
 st.write(
-    "A much larger model, fine tuned on the same data, agreed with the experts slightly more often. "
-    "Its percentages were further off, not closer: 16.5% of the content landed in the wrong category, "
-    "against 12.6% for the small model. It got better by betting on common topics, and every such bet "
-    "inflates their share. It never predicted 17 of the 63 categories at all."
+    "A larger fine tuned model agreed with the experts more often, but 16.5% of content landed in the "
+    "wrong category, against 12.6%. It never predicted 17 of the 63 categories."
 )
 
-st.header("How sure is the model, sentence by sentence?")
+st.header("Can it work without a person?")
 st.write(
-    f"The model can also say when it is unsure and hand those sentences to a person. Set to be right "
-    f"{pct(summary['review']['target'])} of the time, it was right {pct(summary['review']['coverage'])} "
-    f"of the time, but it passed {pct(summary['review']['review_load'])} of sentences to a person. "
-    f"The few it coded alone were right {pct(summary['review']['auto_accuracy'])} of the time. "
-    "A small model is honest about being unsure; it is just unsure about almost everything."
+    f"Not yet. Asked to be right {pct(summary['review']['target'])} of the time, it passes "
+    f"{pct(summary['review']['review_load'])} of sentences to a person."
 )
 
 st.divider()
