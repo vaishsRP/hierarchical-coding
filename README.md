@@ -9,12 +9,14 @@ coding.
 
 Short answer: no. A model that codes half the sentences correctly still puts
 12.6% of each manifesto in the wrong category. A larger fine tuned model agrees
-with the experts more often, yet does worse on the percentages (16.5%).
-Checking 5% of each manifesto by hand fixes it, bringing the error under 1%.
+with the experts more often, yet does worse on the percentages (16.5%). An LLM
+is worse still. Checking 5% of each manifesto by hand fixes it, bringing the
+error under 1%. The trained model results repeat in Dutch.
 
 Data: 111 English manifestos from 7 countries (2014 to 2024), 141,000
 sentences, each coded by an expert into one of 63 Manifesto Project
-categories. Pilot for my MSc AI thesis on coding open ended survey answers.
+categories; 44 Dutch manifestos; and 884,000 British Election Study survey
+answers. Pilot for my MSc AI thesis on coding open ended survey answers.
 
 ## Results
 
@@ -25,7 +27,12 @@ Test set: 24 manifestos from parties the models never saw.
 | Most common category | -0.29 | 0.00 | 14.5% | |
 | TF IDF and logistic regression | 0.452 | 0.270 | 48.7% | |
 | Sentence embeddings and logistic regression | 0.475 | **0.302** | 50.6% | **12.6%** |
-| DeBERTa v3 base, fine tuned, 3 seeds | **0.483** | 0.239 | **51.4%** | 16.5% |
+| DeBERTa v3 base, fine tuned, 3 seeds | 0.483 | 0.239 | 51.4% | 16.5% |
+| DeBERTa reading the handbook definitions | **0.489** | 0.283 | **51.8%** | 13.4% |
+| LLM, zero shot (gpt-oss-120b) | 0.369 | 0.239 | 40.2% | 25.6%* |
+
+*The LLM was run on a random 2,000 sentence sample, so its figure is pooled
+over that sample. On the same sample the trained models score 11% to 14%.
 
 **The errors do not cancel out.** Models over count common topics and under
 count rare ones. 32 of 63 categories are significantly off.
@@ -34,6 +41,16 @@ count rare ones. 32 of 63 categories are significantly off.
 63 categories. Betting on common topics raises its agreement and inflates their
 share. Standard fixes (rescaling confidence, adjusting for category frequency)
 did not repair it.
+
+**The codebook's words help, its shape does not.** Giving the model the
+handbook definition of each category beats plain fine tuning on every measure,
+mostly by rescuing rare categories (never predicted: 19 down to 4). Predicting
+the domain first, then the category, changes nothing.
+
+**Topic right, side wrong.** Trained models often flip stance towards the more
+common side: "against the EU" sentences are tagged as pro EU 58% to 79% of the
+time. The LLM gets them right 87% of the time, but is the worst of all on the
+percentages.
 
 **More data helps, but not enough.**
 
@@ -58,6 +75,17 @@ alone. It mainly buys error margins you can trust.
 **The model cannot yet work unsupervised.** Asked to be right 90% of the time
 and pass anything uncertain to a person, both models pass on 97% of sentences.
 
+**On survey answers, LLM coding stays close to human coding.** The British
+Election Study coded "most important issue" answers by hand until 2023, then
+switched to an LLM. Tracking the switch across 116,000 respondents and 30
+waves, it moved about 1.8% of answers between categories, roughly one point
+more than normal year to year drift. Short survey answers are much easier to
+code than manifesto sentences.
+
+**Dutch shows the same patterns** (44 manifestos): the bigger model agrees more
+(alpha 0.402 against 0.380) but gets the percentages worse, and a 5% hand check
+brings the error from 18.8% to 0.7%.
+
 Full numbers are in `RESULTS.md`.
 
 ## How it works
@@ -69,18 +97,21 @@ Full numbers are in `RESULTS.md`.
   digits (`build_codeframe.py`). Categories with fewer than 100 examples are set
   aside, leaving 63.
 - **Split.** By party, so no party's wording appears in both training and test.
-- **Models.** Sentence embeddings with logistic regression, and DeBERTa fine
-  tuned on a Kaggle GPU (`train_encoder.py`). Hierarchy aware variants are
-  running now (`train_structured.py`).
+- **Models.** Sentence embeddings with logistic regression, DeBERTa fine
+  tuned on a Kaggle GPU (`train_encoder.py`), two hierarchy aware variants
+  (`train_structured.py`), and a zero shot LLM (`llm_zero_shot.py`).
+- **Survey data.** `bes_event_study.py` runs entirely on the laptop, because
+  the BES terms do not allow its answers to go to third parties.
 - **Decided in advance.** Every threshold, split and metric was written into
   `SPEC.md` before the step ran. Later changes carry a dated note.
 
 ## Limitations
 
-- English only so far, and one label per sentence.
+- One label per sentence; real survey coding is often multi label.
 - 24 test manifestos; Australia is 36% of test sentences.
 - The demo uses the small model; DeBERTa is too large for free hosting.
 - Comparison with human coder agreement is still to do.
+- The BES hand coding was software assisted, and BES's LLM setup is not public.
 
 ## Run it
 
@@ -107,6 +138,13 @@ Fine tuning needs a GPU: see `kaggle/` or `jobs/`. Demo:
 The Manifesto Project does not allow redistribution, so this repo holds no
 manifesto text, metadata or handbook definitions. The scripts rebuild them from
 the API. Data: Manifesto Project, WZB Berlin Social Science Center.
+
+BES answers are personal data and are never committed or sent to any service;
+only aggregate shares are published. Data: Fieldhouse, E., Green, J., Evans,
+G., Mellon, J., Prosser, C., Bailey, J., de Geus, R., Schmitt, H., van der Eijk,
+C., Griffiths, J., & Perrett, S. (2026). British Election Study Internet Panel
+Waves 1 to 31. DOI 10.5255/UKDA-SN-8202-4. This project is not endorsed by the
+BES.
 
 ## References
 

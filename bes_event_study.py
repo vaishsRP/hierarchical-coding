@@ -9,7 +9,8 @@ effect of LLM coding. The change in the gap estimates the switch.
 Everything runs locally (BES terms: no third parties). Inputs, all gitignored:
   data/raw/bes/mii_codes.pkl                 codes per wave (from the panel file)
   Downloads/BES2024_W30Strings_v30.1.dta     text, waves 1 to 30
-  Downloads/BES2024_W31_v31.05.dta           text, wave 31
+Wave 31 is left out: its text is not in the strings file, and the `mii`
+column of the single wave file is a 3 value label, not the answer text.
 Outputs (aggregate shares only, no text):
   results/bes_event_study.json, results/bes_gaps_by_wave.csv
 """
@@ -32,12 +33,11 @@ import corpus
 DOWNLOADS = Path.home() / "Downloads"
 PANEL = DOWNLOADS / "BES2024_W31_Panel_v31.05.dta"
 STRINGS = DOWNLOADS / "BES2024_W30Strings_v30.1.dta"
-W31 = DOWNLOADS / "BES2024_W31_v31.05.dta"
 CODES = corpus.mp_api.CACHE_DIR / "bes" / "mii_codes.pkl"
 LONG = corpus.mp_api.CACHE_DIR / "bes" / "mii_long.pkl"
 SEED = 20260924
-HUMAN, LLM = range(1, 26), range(26, 32)
-PRE, POST = range(20, 26), range(26, 32)
+HUMAN, LLM = range(1, 26), range(26, 31)
+PRE, POST = range(20, 26), range(26, 31)
 SLOPE = range(14, 26)
 C_GRID = [0.01, 0.1, 1.0]
 BOOT = 1000
@@ -75,10 +75,8 @@ def long_table():
     text_cols = [f"MII_textW{w}" for w in range(1, 31)]
     # the strings file is 2 GB: read it in chunks, keeping only the MII text columns
     txt = read_text_columns(STRINGS, ["id"] + text_cols)
-    w31 = pd.read_stata(W31, columns=["id", "mii"], convert_categoricals=True)
-    txt = txt.merge(w31.rename(columns={"mii": "MII_textW31"}), on="id", how="outer")
     rows = []
-    for w in range(1, 32):
+    for w in range(1, 31):
         code_col = f"mii_catW{w}" if w in HUMAN else f"mii_cat_llmW{w}"
         part = codes[["id", code_col]].merge(txt[["id", f"MII_textW{w}"]], on="id")
         part.columns = ["id", "code", "text"]
@@ -212,5 +210,38 @@ def main():
               f"  pre slope {r['pre_slope_points_per_wave']:+.3f}")
 
 
+def placebo():
+    """Shift at every fake switch point inside the human waves, 6 waves either
+    side, from the per wave gaps: how large a shift time alone produces."""
+    gaps, names = {}, {}
+    with (bc.RESULTS / "bes_gaps_by_wave.csv").open(encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            gaps.setdefault(int(r["wave"]), {})[int(r["code"])] = float(r["gap"])
+            names[int(r["code"])] = r["name"]
+    codes = sorted(names)
+    g = {w: np.array([gaps[w][k] for k in codes]) for w in gaps}
+    uncoded = codes.index(next(k for k, n in names.items() if n == "Uncoded"))
+
+    def total(pre, post, drop_uncoded=False):
+        s = np.mean([g[w] for w in post], axis=0) - np.mean([g[w] for w in pre], axis=0)
+        if drop_uncoded:
+            s[uncoded] = 0
+        return float(np.abs(s).sum() / 2)
+
+    cuts = range(7, 21)
+    out = json.loads((bc.RESULTS / "bes_event_study.json").read_text())
+    out["placebo"] = {
+        "cuts": list(cuts),
+        "total_shift": [total(range(c - 6, c), range(c, c + 6)) for c in cuts],
+        "total_shift_without_uncoded": [total(range(c - 6, c), range(c, c + 6), True) for c in cuts],
+    }
+    out["total_shift_without_uncoded"] = total(PRE, POST, True)
+    (bc.RESULTS / "bes_event_study.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
+    print(f"real shift {out['total_shift']:.3f} (without Uncoded {out['total_shift_without_uncoded']:.3f}); "
+          f"placebo max {max(out['placebo']['total_shift']):.3f} "
+          f"(without Uncoded {max(out['placebo']['total_shift_without_uncoded']):.3f})")
+
+
 if __name__ == "__main__":
     main()
+    placebo()

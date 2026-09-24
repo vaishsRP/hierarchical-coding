@@ -189,7 +189,7 @@ def main():
                         manifesto_id=np.array([units[i]["manifesto_id"] for i in te]),
                         pos=np.array([units[i]["pos"] for i in te]),
                         y_true=y[te], classes=clf.classes_, proba=proba)
-    print("wrote results/cheap_baseline.json and results/cheap_baseline_per_leaf.csv")
+    print("wrote results/" + corpus.res("cheap_baseline.json"))
 
 
 if __name__ == "__main__":

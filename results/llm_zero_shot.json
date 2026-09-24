@@ -1,0 +1,165 @@
+{
+  "model": "openai/gpt-oss-120b",
+  "samples": {
+    "random": {
+      "sentences": 2000,
+      "llm_invalid_answers": 0,
+      "llm": {
+        "alpha_leaf": 0.3689662577499919,
+        "macro_f1_leaf": 0.23862273464574332,
+        "accuracy_leaf": 0.4015,
+        "alpha_domain": 0.49150516061247007,
+        "pooled_wrong_category": 0.2555,
+        "accuracy_before_2024": 0.40170031880977686,
+        "accuracy_2024": 0.3983050847457627,
+        "accuracy_2024_n": 118
+      },
+      "cheap": {
+        "alpha_leaf": 0.49913568675348796,
+        "macro_f1_leaf": 0.29240959152319834,
+        "accuracy_leaf": 0.5285,
+        "alpha_domain": 0.5667035435137435,
+        "pooled_wrong_category": 0.1155,
+        "accuracy_before_2024": 0.5308182784272051,
+        "accuracy_2024": 0.4915254237288136,
+        "accuracy_2024_n": 118
+      },
+      "deberta_flat": {
+        "alpha_leaf": 0.5009480260029272,
+        "macro_f1_leaf": 0.22383120731487002,
+        "accuracy_leaf": 0.5303333333333333,
+        "alpha_domain": 0.5848965049787019,
+        "pooled_wrong_category": 0.14083333333333334,
+        "accuracy_before_2024": 0.5304640453418349,
+        "accuracy_2024": 0.5282485875706214,
+        "accuracy_2024_n": 118
+      },
+      "deberta_definitions": {
+        "alpha_leaf": 0.5051848562013679,
+        "macro_f1_leaf": 0.27179354353834634,
+        "accuracy_leaf": 0.5338333333333333,
+        "alpha_domain": 0.5854759372471809,
+        "pooled_wrong_category": 0.11416666666666668,
+        "accuracy_before_2024": 0.5338292596528516,
+        "accuracy_2024": 0.5338983050847458,
+        "accuracy_2024_n": 118
+      }
+    },
+    "stance": {
+      "sentences": 402,
+      "llm_invalid_answers": 0,
+      "llm": {
+        "alpha_leaf": 0.42192054997171824,
+        "macro_f1_leaf": 0.04061666813581054,
+        "accuracy_leaf": 0.5472636815920398,
+        "alpha_domain": 0.6723007516099522,
+        "pooled_wrong_category": 0.4378109452736319,
+        "accuracy_before_2024": 0.5667655786350149,
+        "accuracy_2024": 0.4461538461538462,
+        "accuracy_2024_n": 65,
+        "stance": {
+          "Against immigration": {
+            "correct": 0.708994708994709,
+            "flipped": 0.08465608465608465
+          },
+          "Against expanding welfare": {
+            "correct": 0.25,
+            "flipped": 0.1574074074074074
+          },
+          "Against the EU": {
+            "correct": 0.8653846153846154,
+            "flipped": 0.057692307692307696
+          },
+          "Against the military": {
+            "correct": 0.2641509433962264,
+            "flipped": 0.05660377358490566
+          }
+        }
+      },
+      "cheap": {
+        "alpha_leaf": 0.024225731121857552,
+        "macro_f1_leaf": 0.017558012803444416,
+        "accuracy_leaf": 0.1417910447761194,
+        "alpha_domain": 0.4617417918753478,
+        "pooled_wrong_category": 0.855721393034826,
+        "accuracy_before_2024": 0.10089020771513353,
+        "accuracy_2024": 0.35384615384615387,
+        "accuracy_2024_n": 65,
+        "stance": {
+          "Against immigration": {
+            "correct": 0.13756613756613756,
+            "flipped": 0.2698412698412698
+          },
+          "Against expanding welfare": {
+            "correct": 0.027777777777777776,
+            "flipped": 0.5648148148148148
+          },
+          "Against the EU": {
+            "correct": 0.15384615384615385,
+            "flipped": 0.5769230769230769
+          },
+          "Against the military": {
+            "correct": 0.37735849056603776,
+            "flipped": 0.20754716981132076
+          }
+        }
+      },
+      "deberta_flat": {
+        "alpha_leaf": -0.0673252685789097,
+        "macro_f1_leaf": 0.004487664723010446,
+        "accuracy_leaf": 0.06053067993366501,
+        "alpha_domain": 0.5559597390054295,
+        "pooled_wrong_category": 0.9394693200663351,
+        "accuracy_before_2024": 0.040553907022749754,
+        "accuracy_2024": 0.1641025641025641,
+        "accuracy_2024_n": 65,
+        "stance": {
+          "Against immigration": {
+            "correct": 0.11816578483245149,
+            "flipped": 0.3880070546737213
+          },
+          "Against expanding welfare": {
+            "correct": 0.0,
+            "flipped": 0.5895061728395062
+          },
+          "Against the EU": {
+            "correct": 0.0,
+            "flipped": 0.7948717948717948
+          },
+          "Against the military": {
+            "correct": 0.03773584905660377,
+            "flipped": 0.5911949685534591
+          }
+        }
+      },
+      "deberta_definitions": {
+        "alpha_leaf": -0.02114790514201248,
+        "macro_f1_leaf": 0.011140938931151678,
+        "accuracy_leaf": 0.09950248756218905,
+        "alpha_domain": 0.4973335417736595,
+        "pooled_wrong_category": 0.8988391376451078,
+        "accuracy_before_2024": 0.0702274975272008,
+        "accuracy_2024": 0.2512820512820513,
+        "accuracy_2024_n": 65,
+        "stance": {
+          "Against immigration": {
+            "correct": 0.1146384479717813,
+            "flipped": 0.3386243386243386
+          },
+          "Against expanding welfare": {
+            "correct": 0.021604938271604937,
+            "flipped": 0.5216049382716049
+          },
+          "Against the EU": {
+            "correct": 0.0,
+            "flipped": 0.7756410256410255
+          },
+          "Against the military": {
+            "correct": 0.3018867924528302,
+            "flipped": 0.3522012578616352
+          }
+        }
+      }
+    }
+  }
+}

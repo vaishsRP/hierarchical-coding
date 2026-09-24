@@ -1,0 +1,77 @@
+{
+  "protocol": {
+    "embed_model": "intfloat/multilingual-e5-small",
+    "c_grid": [
+      0.01,
+      0.1,
+      1.0,
+      10.0
+    ],
+    "selection": "dev log-loss",
+    "class_weight": null,
+    "min_leaf_units": 100
+  },
+  "data": {
+    "modelled_units": 106700,
+    "leaves": 62,
+    "split_units": {
+      "train": 65268,
+      "test": 15698,
+      "calib": 17428,
+      "dev": 8306
+    },
+    "sparse_set_aside": {
+      "000": 99,
+      "606.2": 96,
+      "103.2": 94,
+      "706": 68,
+      "507": 42,
+      "202.2": 23,
+      "305.2": 23,
+      "702": 8,
+      "705": 6,
+      "102": 4,
+      "305.6": 0,
+      "607.3": 0,
+      "305.5": 0,
+      "305.4": 0,
+      "608.3": 0
+    }
+  },
+  "versions": {
+    "python": "3.12.4",
+    "sklearn": "1.9.1"
+  },
+  "majority_class": {
+    "alpha_leaf": -0.3069739808428218,
+    "macro_f1_leaf": 0.002810105876085211,
+    "accuracy_leaf": 0.0954261689387183,
+    "alpha_category": -0.30792972778028393,
+    "accuracy_category": 0.0954261689387183,
+    "alpha_domain": -0.27498699665420556,
+    "accuracy_domain": 0.2882532806726972
+  },
+  "tfidf_reference": {
+    "C": 10.0,
+    "dev_log_loss": 3.027963786322628,
+    "alpha_leaf": 0.325691937429337,
+    "macro_f1_leaf": 0.20328094202694127,
+    "accuracy_leaf": 0.3664161039622882,
+    "alpha_category": 0.33145446537197354,
+    "accuracy_category": 0.37265893744426043,
+    "alpha_domain": 0.39784170317952894,
+    "accuracy_domain": 0.5334437507962798
+  },
+  "cheap_baseline": {
+    "C": 0.01,
+    "dev_log_loss": 2.612823247909546,
+    "test_log_loss": 2.188011646270752,
+    "alpha_leaf": 0.37967360665032857,
+    "macro_f1_leaf": 0.25208307534605695,
+    "accuracy_leaf": 0.41266403363485793,
+    "alpha_category": 0.38874523289312235,
+    "accuracy_category": 0.4222193910052236,
+    "alpha_domain": 0.4747157140470526,
+    "accuracy_domain": 0.5845330615365014
+  }
+}

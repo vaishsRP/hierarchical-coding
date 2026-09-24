@@ -77,7 +77,7 @@ def main():
               f"{len(r['leaves_below_80pct_coverage'])}", flush=True)
 
     (bc.RESULTS / corpus.res("conformal_cheap.json")).write_text(json.dumps(out, indent=2), encoding="utf-8")
-    print("wrote results/conformal_cheap.json")
+    print("wrote results/" + corpus.res("conformal_cheap.json"))
 
 
 if __name__ == "__main__":

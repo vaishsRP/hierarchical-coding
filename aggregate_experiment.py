@@ -174,7 +174,7 @@ def main():
         w.writerow(["estimator", "level", "code", "train_prevalence", "mean_true_share",
                     "bias", "ci_low", "ci_high"])
         w.writerows(detail_rows)
-    print("wrote results/aggregate_cheap.json and results/aggregate_cheap_per_leaf.csv")
+    print("wrote results/" + corpus.res("aggregate_cheap.json"))
 
 
 if __name__ == "__main__":

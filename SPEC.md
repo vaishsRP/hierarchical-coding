@@ -252,6 +252,14 @@ strong baseline microsoft/mdeberta-v3-base with the English hyperparameters.
 Core steps only (3, 4, 5, 7, 8); the hierarchy variants run in Dutch only if
 they beat the flat model in English under the step 6 rule.
 
+**Note, 2026-09-24, after step 6 in English.** Under the step 6 rule the
+definitions variant beats the flat model (alpha +0.005 against a margin of
+0.002; macro F1 +0.044 against 0.007) and the output hierarchy does not. So,
+as fixed above, the definitions variant also runs in Dutch, with
+mdeberta-v3-base. The May 2021 handbook definitions exist only in English, so
+Dutch sentences are scored against English definitions (cross lingual); this
+is stated with the Dutch results.
+
 **LLM comparison (added 2026-09-24).** Groq free tier, Llama 3.3 70B,
 temperature 0. Zero shot: the prompt lists the modelled leaves with their
 handbook names only, no definitions and no training examples, so no training
@@ -304,6 +312,22 @@ over waves 14 to 25 is reported, so a drifting baseline is visible rather
 than assumed away.
 Caveats to report: the human codes were software assisted; waves 25 and 26
 are a year apart; BES's LLM, prompt and settings are not known here.
+
+**Note, 2026-09-24, BES correction.** The first BES run used wave 31 text
+taken from the single wave file's `mii` column, which turned out to be a 3
+value label, not the answer text (the strings file covers waves 1 to 30 only).
+Wave 31 is dropped: the LLM period is waves 26 to 30. Everything else in the
+BES protocol is unchanged. A placebo check is added: the same shift computed at
+every fake switch point inside the human waves (6 waves either side), to show
+how large a shift time alone produces.
+
+**Note, 2026-09-24, LLM changes before it ran.** (1) Llama 3.3 70B is no
+longer offered on Groq; the model is openai/gpt-oss-120b (open weights,
+reasoning effort low, temperature 0). (2) Added a second, targeted sample:
+every English test sentence whose code is one of the four "against" stances
+(601.2, 505, 110, 105), because the random sample holds too few of them to
+test stance flips. Batches of 20 sentences per request; an answer that is not
+one of the 63 codes counts as wrong.
 
 ## How it gets evaluated
 

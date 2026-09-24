@@ -16,6 +16,8 @@ import torch
 
 VARIANT = "hier"
 SMOKE = False
+LANG = "en"                       # "en": DeBERTa v3 base; "nl": mDeBERTa v3 base
+MODEL = "microsoft/deberta-v3-base" if LANG == "en" else "microsoft/mdeberta-v3-base"
 
 
 def find(name):
@@ -23,7 +25,8 @@ def find(name):
 
 
 script = find("train_structured.py")
-extra = ["--data", find("modelling_en_hb5.jsonl"), "--structure", find("codeframe_hb5_structure.csv")]
+extra = ["--model", MODEL, "--data", find(f"modelling_{LANG}_hb5.jsonl"),
+         "--structure", find("codeframe_hb5_structure.csv")]
 if VARIANT == "defs":
     extra += ["--definitions", find("codeframe_hb5.csv")]
 
@@ -34,7 +37,7 @@ failed = []
 for start in range(0, len(seeds), gpus):
     procs = []
     for gpu, seed in enumerate(seeds[start : start + gpus]):
-        out = f"/kaggle/working/runs/{VARIANT}_s{seed}"
+        out = f"/kaggle/working/runs/{LANG}_{VARIANT}_s{seed}"
         os.makedirs(out, exist_ok=True)
         cmd = [sys.executable, script, "--variant", VARIANT, "--seed", str(seed), "--out", out] + extra
         if SMOKE:

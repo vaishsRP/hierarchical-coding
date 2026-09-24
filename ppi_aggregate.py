@@ -120,7 +120,7 @@ def main():
     Y, F = indicators(y[te], pred, keep)
     out = {"test_documents": len(set(doc[te])), "draws": DRAWS, "budgets": ppi_budgets(Y, F, doc[te])}
     (bc.RESULTS / corpus.res("ppi_cheap.json")).write_text(json.dumps(out, indent=2), encoding="utf-8")
-    print("wrote results/ppi_cheap.json")
+    print("wrote results/" + corpus.res("ppi_cheap.json"))
 
 
 if __name__ == "__main__":

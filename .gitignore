@@ -9,3 +9,4 @@ data/codeframe_hb5_2026.csv
 data/manifesto_metadata.csv
 data/splits*.csv
 runs/
+groq_apikey.txt

@@ -144,9 +144,97 @@ the percentages right, and the reliable route is correcting them with a small
 hand checked sample. Whether a model can also make that sample smaller needs
 agreement well above what either model reaches here.
 
+## Step 6: using the hierarchy
+
+Same encoder, recipe and seeds as the flat DeBERTa. A variant counts as better
+only if it beats flat by more than the seed spread (rule fixed in SPEC.md).
+
+| Test set, mean of 3 seeds | alpha | Macro F1 | Wrong category, top guess | Wrong category, averaged | Verdict |
+|---|---|---|---|---|---|
+| Flat DeBERTa | 0.483 | 0.239 | 16.5% | 10.2% | reference |
+| Hierarchy in the output (domain, then category) | 0.484 | 0.244 | 16.9% | 10.1% | no difference |
+| **Hierarchy in the input (handbook definitions)** | **0.489** | **0.283** | **13.4%** | **9.2%** | **better** |
+
+The strict "domain first" decode of the output variant scores the same (alpha
+0.482). What helps is the experts' written definitions, not the shape of the
+tree. The gain is on rare categories: F1 on the rarest third rises from 0.04 to
+0.12, and categories never predicted drop from 19 to 4. Stance flips barely
+change.
+
+## Dutch
+
+Netherlands and Flanders, 62 categories, same protocol.
+
+| Dutch test set | Cheap model | mDeBERTa (3 seeds) |
+|---|---|---|
+| alpha | 0.380 | **0.402** |
+| Macro F1 | **0.252** | 0.195 |
+| Wrong category, top guess | **18.8%** | 20.5% |
+| Wrong category, averaged | 11.2% | 11.1% |
+| Review load at 90% | 99.6% | 99.9% |
+
+Checking 5% by hand brings the error from 18.8% to 0.7% (10%: 0.5%; 20%: 0.4%),
+with margins holding 92 to 98% of the time for categories above 2%. Every
+English pattern repeats: the bigger model agrees more and gets rare categories
+and percentages worse, and the hand checked sample fixes the percentages.
+
+## LLM, zero shot
+
+openai/gpt-oss-120b on Groq's free tier, temperature 0, given the 63 category
+names only (no definitions, no examples). Scored against the other models on
+the same sentences.
+
+| Random 2,000 English test sentences | alpha | Macro F1 | Accuracy | Wrong category, pooled |
+|---|---|---|---|---|
+| LLM, zero shot | 0.369 | 0.239 | 40.2% | 25.6% |
+| Cheap model | 0.499 | 0.292 | 52.8% | 11.6% |
+| DeBERTa flat | 0.501 | 0.224 | 53.0% | 14.1% |
+| DeBERTa with definitions | **0.505** | 0.272 | **53.4%** | **11.4%** |
+
+| All 402 test sentences with an "against" stance | LLM right / flipped | Cheap model (best trained) right / flipped |
+|---|---|---|
+| Against immigration | **71% / 8%** | 14% / 27% |
+| Against expanding welfare | **25% / 16%** | 3% / 56% |
+| Against the EU | **87% / 6%** | 15% / 58% |
+| Against the military | 26% / 6% | 38% / 21% |
+
+- The LLM is the only model that gets stance right, because it reads meaning
+  instead of learning which side is common.
+- It is also the worst at the percentages, by about double. It uses the
+  categories differently from the Manifesto coders, so its errors are
+  systematic too, just not in the direction of common topics.
+- No sign of memorisation: accuracy is 40.2% before 2024 and 39.8% on 2024
+  manifestos (n = 118, a weak test; the model's training data reportedly runs
+  to about mid 2024).
+
+## Survey data: the British Election Study switch to LLM coding
+
+"What is the most important issue facing the country?", BES internet panel,
+waves 1 to 30 (2014 to 2025), 116,067 people. BES coded waves 1 to 25 by hand
+(software assisted) and waves 26 to 30 with an LLM, using the same 49
+categories. No answer was coded both ways, so the switch is studied as an event:
+a model trained on the hand coded waves is one fixed coder across all waves, and
+the change in its gap to BES at the switch estimates what the LLM changed.
+Everything ran locally; no BES text left the laptop.
+
+| | Content that moved category |
+|---|---|
+| At the switch (waves 20 to 25 against 26 to 30) | **1.8%** (95% CI 1.7 to 2.0) |
+| At fake switch points inside the hand coded waves | median 0.8%, largest 1.1% |
+
+- The switch moved about 1.8% of reported answers between categories, roughly
+  one point more than normal drift. Largest shifts: Uncoded +0.45 points,
+  Coronavirus -0.28. Living costs (-0.23) is not trustworthy: it was already
+  drifting before the switch.
+- Compared with the manifestos (zero shot LLM: 25.6% in the wrong category),
+  an LLM set up by the study team on one or two word survey answers stays close
+  to human coding.
+- A first run wrongly used a 3 value label as wave 31 text; wave 31 is dropped
+  (dated note in SPEC.md).
+
 ## What is pending
 
-- Step 6 structured variants (hierarchy in the output, hierarchy in the
-  input), running on Kaggle with the same recipe as the flat model.
-- The human ceiling: comparing these alphas with published agreement between
-  human coders on this scheme.
+- Dutch definitions variant (running on Kaggle).
+- Dutch C sensitivity check (the Dutch cheap fit chose C on the grid edge).
+- The human ceiling: these alphas against published agreement between human
+  coders on the Manifesto scheme (Mikhaylov, Laver and Benoit, 2012).
