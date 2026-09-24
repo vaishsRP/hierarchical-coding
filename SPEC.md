@@ -262,19 +262,22 @@ corpus in pretraining, so results are also split into manifestos published
 before and after 2024, compared with the same split for the other models.
 
 **Second dataset (changed 2026-09-24).** GoEmotions is replaced by a real
-survey open end: the GLES panel 2016, wave 1, "What do you think is the most
-important political problem in Germany at the moment?" (GESIS ZA6838, version
-5.0.0, DOI 10.4232/1.13783; the text answers are a separate csv joined on
-lfdn). 17,584 answers, 55 codes, multi label (12.6% of answers have more than
-one), double coded with kappa 0.88 per label (Schonlau et al., arXiv
-2304.02945). It is the ING setting GoEmotions only stood in for: survey
-answers, multi label, and a real human ceiling. German rather than Dutch; the
-multilingual models already cover it.
-Considered and set aside: LISS project 284 (Meitinger and Schonlau, 2020).
-Its only coded open ends are about the survey itself (audio experience, why
-audio, why writing), with a few hundred to about 2,000 answers each.
-The protocol for GLES gets fixed here once the data and its codeframe are in
-hand, before any model runs on it.
+survey open end: the British Election Study internet panel, "most important
+issue" (MII). Human coders, helped by software that suggests a code, coded the
+open text into 50 categories (`mii_cat`) grouped into 12 broad ones
+(`small_mii_cat`); the text is in the panel's Strings files. Chosen as the
+follow up because it is single label like the Manifesto data (the whole
+pipeline carries over), has a two level codeframe (the hierarchy question on
+survey data), is English, and is large enough for the learning curve.
+Caveat to report: the coding was model assisted, so labels may lean towards
+the software's suggestions.
+Optional multi label extension: GLES 2016 wave 1 "most important problem"
+(GESIS ZA6838, 17,584 answers, 55 codes, double coded, kappa 0.88).
+Considered and set aside: LISS project 284 (coded open ends are only about the
+survey itself), ANES 2008 open ended coding (multi label but about 2,000
+respondents), Dutch election studies (open answers often not released).
+The BES protocol (wave, sample, parents of the 50 codes) gets fixed here once
+the data and codebook are in hand, before any model runs on it.
 
 ## How it gets evaluated
 
@@ -317,7 +320,7 @@ leaves a result.
    baseline.
 7. Conformal abstention, report coverage and human review load.
 8. Prediction-powered inference on the aggregate.
-9. Second dataset (GLES most important problem, multi label survey open end), generalisation check.
+9. Second dataset (British Election Study most important issue, 50 codes under 12), generalisation check.
 10. README with the numbers, the failure analysis, and what it means for
     the ING project.
 
