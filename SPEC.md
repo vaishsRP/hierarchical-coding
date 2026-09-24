@@ -241,6 +241,26 @@ units (at least 10), 200 draws each. Reported: total bias, RMSE, 95% CI
 coverage (all document and leaf pairs, and pairs with a true share of at
 least 2%) and CI width. Same cheap-first, strong-later rule as step 7.
 
+**Dutch (added 2026-09-24).** Fixed before any Dutch model ran. Netherlands
+and Flanders, handbook 5, same rules as English (deduplication, 100 unit
+threshold, party split, dev log loss selection), run with `HC_LANG=dutch`.
+Result: 44 manifestos, 107,163 coded units, 62 modelled leaves (smallest kept
+305.3 with 112, largest dropped 606.2 with 96); `data/splits_dutch.csv` SHA256
+a06eeb0e9f68dba3800d50a3d7f59766ee1e9eb73ec96cdacba1068a50d4f008. Cheap
+baseline uses intfloat/multilingual-e5-small (same encoder size as bge small),
+strong baseline microsoft/mdeberta-v3-base with the English hyperparameters.
+Core steps only (3, 4, 5, 7, 8); the hierarchy variants run in Dutch only if
+they beat the flat model in English under the step 6 rule.
+
+**LLM comparison (added 2026-09-24).** Groq free tier, Llama 3.3 70B,
+temperature 0. Zero shot: the prompt lists the modelled leaves with their
+handbook names only, no definitions and no training examples, so no training
+text is sent. English test set only, a fixed random sample of 2,000 sentences
+(seed 0), with the other models scored on the same sample for comparison.
+Contamination check: the model may have seen the handbook and the coded
+corpus in pretraining, so results are also split into manifestos published
+before and after 2024, compared with the same split for the other models.
+
 ## How it gets evaluated
 
 Three separate questions. Keeping them separate is most of the value.

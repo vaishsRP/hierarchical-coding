@@ -12,8 +12,10 @@ import subprocess
 import sys
 
 SMOKE = False
+LANG = "en"                       # "en": DeBERTa v3 base; "nl": mDeBERTa v3 base
+MODEL = "microsoft/deberta-v3-base" if LANG == "en" else "microsoft/mdeberta-v3-base"
 script = glob.glob("/kaggle/input/**/train_encoder.py", recursive=True)[0]
-data = glob.glob("/kaggle/input/**/modelling_en_hb5.jsonl", recursive=True)[0]
+data = glob.glob(f"/kaggle/input/**/modelling_{LANG}_hb5.jsonl", recursive=True)[0]
 
 subprocess.run([sys.executable, "-c",
                 "import torch; print('cuda:', torch.cuda.is_available(), torch.cuda.get_device_name(0) if torch.cuda.is_available() else '')"],
@@ -29,9 +31,9 @@ failed = []
 for start in range(0, len(seeds), gpus):
     procs = []
     for gpu, seed in enumerate(seeds[start : start + gpus]):
-        out = f"/kaggle/working/runs/deberta_s{seed}"
+        out = f"/kaggle/working/runs/{LANG}_deberta_s{seed}"
         os.makedirs(out, exist_ok=True)
-        cmd = [sys.executable, script, "--data", data, "--seed", str(seed), "--out", out]
+        cmd = [sys.executable, script, "--model", MODEL, "--data", data, "--seed", str(seed), "--out", out]
         if SMOKE:
             cmd += ["--limit", "2000", "--epochs", "1"]
         env = dict(os.environ, CUDA_VISIBLE_DEVICES=str(gpu))

@@ -32,7 +32,10 @@ from sklearn.preprocessing import StandardScaler
 
 import corpus
 
-EMBED_MODEL = "BAAI/bge-small-en-v1.5"
+# English: bge small. Other languages: multilingual e5 small, same size of
+# encoder (12 layers, 384 wide); e5 expects a "query: " prefix on every input.
+EMBED_MODEL = "BAAI/bge-small-en-v1.5" if corpus.LANG == "english" else "intfloat/multilingual-e5-small"
+EMBED_PREFIX = "" if corpus.LANG == "english" else "query: "
 C_GRID = [0.01, 0.1, 1.0, 10.0]
 RESULTS = corpus.mp_api.ROOT / "results"
 EMB_DIR = corpus.mp_api.CACHE_DIR / "embeddings"
@@ -40,11 +43,11 @@ CHUNK = 5000
 
 
 def load():
-    units, _ = corpus.coded_units("english", "5")
+    units, _ = corpus.coded_units()
     parent = corpus.codeframe()
     keep, sparse, counts = corpus.eligible_leaves(units, parent)
     split_of = {r["manifesto_id"]: r["split"]
-                for r in csv.DictReader((corpus.DATA / "splits.csv").open(encoding="utf-8"))}
+                for r in csv.DictReader(corpus.SPLITS.open(encoding="utf-8"))}
     modelled = [u for u in units if u["cmp_code"] in set(keep)]
     for u in modelled:
         u["split"] = split_of[u["manifesto_id"]]
@@ -58,6 +61,7 @@ def embed(texts):
     tag = EMBED_MODEL.replace("/", "__")
     model = None
     parts = []
+    texts = [EMBED_PREFIX + t for t in texts]
     for i in range(0, len(texts), CHUNK):
         chunk = texts[i : i + CHUNK]
         digest = hashlib.sha1("\n".join(chunk).encode("utf-8")).hexdigest()[:12]
@@ -169,11 +173,11 @@ def main():
     print("cheap baseline:", out["cheap_baseline"], flush=True)
 
     RESULTS.mkdir(exist_ok=True)
-    (RESULTS / "cheap_baseline.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
+    (RESULTS / corpus.res("cheap_baseline.json")).write_text(json.dumps(out, indent=2), encoding="utf-8")
 
     f1 = f1_score(y[te], pred, labels=keep, average=None, zero_division=0)
     support = collections.Counter(y[te])
-    with (RESULTS / "cheap_baseline_per_leaf.csv").open("w", newline="", encoding="utf-8") as f:
+    with (RESULTS / corpus.res("cheap_baseline_per_leaf.csv")).open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["code", "category", "domain", "train_units", "test_units", "f1"])
         train_n = collections.Counter(y[tr])
@@ -181,7 +185,7 @@ def main():
             w.writerow([code, corpus.category_of(code, parent), corpus.domain_of(code, parent),
                         train_n[code], support[code], round(float(score), 4)])
 
-    np.savez_compressed(corpus.mp_api.CACHE_DIR / "preds_cheap_test.npz",
+    np.savez_compressed(corpus.mp_api.CACHE_DIR / corpus.res("preds_cheap_test.npz"),
                         manifesto_id=np.array([units[i]["manifesto_id"] for i in te]),
                         pos=np.array([units[i]["pos"] for i in te]),
                         y_true=y[te], classes=clf.classes_, proba=proba)

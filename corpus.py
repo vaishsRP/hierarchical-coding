@@ -15,6 +15,7 @@ import collections
 import csv
 import hashlib
 import json
+import os
 
 import mp_api
 
@@ -22,6 +23,19 @@ DATA = mp_api.ROOT / "data"
 SENTENCES = mp_api.CACHE_DIR / "quasi_sentences.jsonl"
 NOT_CODED = {"NA", "H"}
 MIN_LEAF_UNITS = 100
+
+# Language of the run: set HC_LANG=dutch for the Dutch pipeline. English keeps
+# the original file names; other languages get a suffix on every output.
+LANG = os.environ.get("HC_LANG", "english")
+TAG = "" if LANG == "english" else f"_{LANG}"
+SPLITS = DATA / f"splits{TAG}.csv"
+MODELLING = mp_api.CACHE_DIR / f"modelling_{'en' if LANG == 'english' else 'nl'}_hb5.jsonl"
+
+
+def res(name):
+    """Result file name for the current language: cheap_baseline.json -> cheap_baseline_dutch.json."""
+    stem, dot, ext = name.rpartition(".")
+    return f"{stem}{TAG}.{ext}"
 
 
 def codeframe():
@@ -78,9 +92,9 @@ def dedupe(docs):
     return {k: v for k, v in docs.items() if k not in dropped}, dropped
 
 
-def coded_units(language="english", handbook="5"):
+def coded_units(language=None, handbook="5"):
     """Deduplicated coded units (NA and H removed) plus the dropped duplicates."""
-    docs, dropped = dedupe(load_documents(language, handbook))
+    docs, dropped = dedupe(load_documents(language or LANG, handbook))
     units = [u for key in sorted(docs) for u in docs[key] if u["cmp_code"] not in NOT_CODED]
     return units, dropped
 

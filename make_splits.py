@@ -55,19 +55,19 @@ def assign(units):
 
 
 def main():
-    units, _ = corpus.coded_units("english", "5")
+    units, _ = corpus.coded_units()
     split_of, size, country, docs = assign(units)
 
     doc_units = collections.Counter(u["manifesto_id"] for u in units)
     rows = sorted((m, p, country[p], split_of[p], doc_units[m])
                   for p in split_of for m in docs[p])
-    with (corpus.DATA / "splits.csv").open("w", newline="", encoding="utf-8") as f:
+    with corpus.SPLITS.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["manifesto_id", "party", "country", "split", "units"])
         w.writerows(rows)
 
-    digest = hashlib.sha256((corpus.DATA / "splits.csv").read_bytes()).hexdigest()
-    print(f"splits.csv sha256 {digest}")
+    digest = hashlib.sha256(corpus.SPLITS.read_bytes()).hexdigest()
+    print(f"{corpus.SPLITS.name} sha256 {digest}")
 
     total = sum(size.values())
     print("split  parties  docs   units  share")

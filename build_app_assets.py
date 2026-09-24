@@ -66,6 +66,25 @@ def model():
     return q
 
 
+# stance pairs: (the "against" side, its opposite)
+STANCE_PAIRS = [("601.2", "602.2", "Against immigration"), ("505", "504", "Against expanding welfare"),
+                ("110", "108", "Against the EU"), ("105", "104", "Against the military")]
+
+
+def stance_flips():
+    """How often the cheap model tags a sentence with the opposite stance."""
+    z = np.load(corpus.mp_api.CACHE_DIR / "preds_cheap_test.npz", allow_pickle=True)
+    classes = list(z["classes"])
+    y = z["y_true"]
+    pred = np.array(classes)[z["proba"].argmax(axis=1)]
+    out = []
+    for code, other, label in STANCE_PAIRS:
+        m = y == code
+        out.append({"stance": label, "sentences": int(m.sum()),
+                    "correct": float(np.mean(pred[m] == code)), "flipped": float(np.mean(pred[m] == other))})
+    return out
+
+
 def summary(leaf_names, domain_names):
     cheap = json.loads((bc.RESULTS / "cheap_baseline.json").read_text())
     agg = json.loads((bc.RESULTS / "aggregate_cheap.json").read_text())
@@ -108,6 +127,7 @@ def summary(leaf_names, domain_names):
         "review": {"target": conf["target_coverage"], "review_load": conf["lac"]["human_review_load"],
                    "auto_accuracy": conf["lac"]["auto_coded_accuracy"], "coverage": conf["lac"]["coverage"]},
         "domains": domain_names,
+        "stance_flips": stance_flips(),
     }
 
 

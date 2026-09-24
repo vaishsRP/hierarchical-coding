@@ -35,6 +35,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
 import baseline_cheap as bc
+import corpus
 
 BUDGETS = [0.05, 0.10, 0.20]
 MIN_LABELS = 10
@@ -112,13 +113,13 @@ def main():
     x = bc.embed([u["text"] or "" for u in units])
     tr, te = (np.where(split == s)[0] for s in ("train", "test"))
 
-    c = json.loads((bc.RESULTS / "cheap_baseline.json").read_text())["cheap_baseline"]["C"]
+    c = json.loads((bc.RESULTS / corpus.res("cheap_baseline.json")).read_text())["cheap_baseline"]["C"]
     scaler = StandardScaler().fit(x[tr])
     clf = LogisticRegression(C=c, max_iter=3000).fit(scaler.transform(x[tr]), y[tr])
     pred = clf.predict(scaler.transform(x[te]))
     Y, F = indicators(y[te], pred, keep)
     out = {"test_documents": len(set(doc[te])), "draws": DRAWS, "budgets": ppi_budgets(Y, F, doc[te])}
-    (bc.RESULTS / "ppi_cheap.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
+    (bc.RESULTS / corpus.res("ppi_cheap.json")).write_text(json.dumps(out, indent=2), encoding="utf-8")
     print("wrote results/ppi_cheap.json")
 
 

@@ -167,9 +167,9 @@ def main():
                   f"PA total bias={res['pa_leaf']['total_bias']:.3f}", flush=True)
 
     bc.RESULTS.mkdir(exist_ok=True)
-    (bc.RESULTS / "aggregate_cheap.json").write_text(json.dumps(
+    (bc.RESULTS / corpus.res("aggregate_cheap.json")).write_text(json.dumps(
         {"test_documents": len(docs), "curve": curve}, indent=2), encoding="utf-8")
-    with (bc.RESULTS / "aggregate_cheap_per_leaf.csv").open("w", newline="", encoding="utf-8") as f:
+    with (bc.RESULTS / corpus.res("aggregate_cheap_per_leaf.csv")).open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["estimator", "level", "code", "train_prevalence", "mean_true_share",
                     "bias", "ci_low", "ci_high"])

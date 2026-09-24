@@ -133,6 +133,16 @@ st.altair_chart((line.mark_line(color=c["model"], strokeWidth=2)
                  + line.mark_circle(color=c["model"], size=80, opacity=1)).properties(height=240),
                 use_container_width=True)
 
+# ------------------------------------------------------------------ stance
+st.header("Topic right, side wrong")
+st.markdown("The model usually finds the topic, then picks whichever side it saw more often in training.")
+flips = pd.DataFrame(summary["stance_flips"])
+st.dataframe(pd.DataFrame({
+    "Sentences that are": flips["stance"],
+    "Tagged correctly": (100 * flips["correct"]).round().astype(int).astype(str) + "%",
+    "Tagged as the opposite side": (100 * flips["flipped"]).round().astype(int).astype(str) + "%",
+}), hide_index=True, use_container_width=True)
+
 # ------------------------------------------------------------------ the fix
 st.header("The fix: let a person check a small sample")
 st.markdown(
@@ -172,6 +182,7 @@ if st.button("Tag it", type="primary") and text.strip():
         y=alt.Y("Topic:N", sort=None, title=None, axis=alt.Axis(labelLimit=320, labelFontSize=13)),
         tooltip=[alt.Tooltip("Topic:N"), alt.Tooltip("Confidence:Q", format=".0%")],
     ).properties(height=140), use_container_width=True)
+    st.caption("It spots the topic well but often gets the side wrong, as shown above.")
     if plausible == 1:
         st.markdown(f"**Verdict: the model can tag this alone** as {guesses['Topic'][0]}.")
     else:

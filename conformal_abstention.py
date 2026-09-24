@@ -24,6 +24,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
 import baseline_cheap as bc
+import corpus
 
 TARGET = 0.90
 SCORES = ["lac", "aps"]
@@ -37,7 +38,7 @@ def main():
     x = bc.embed([u["text"] or "" for u in units])
     tr, cal, te = (np.where(split == s)[0] for s in ("train", "calib", "test"))
 
-    c = json.loads((bc.RESULTS / "cheap_baseline.json").read_text())["cheap_baseline"]["C"]
+    c = json.loads((bc.RESULTS / corpus.res("cheap_baseline.json")).read_text())["cheap_baseline"]["C"]
     scaler = StandardScaler().fit(x[tr])
     xs = scaler.transform(x)
     clf = LogisticRegression(C=c, max_iter=3000).fit(xs[tr], y[tr])
@@ -75,7 +76,7 @@ def main():
               f"{r['auto_coded_accuracy']:.3f}, leaves under 80% coverage "
               f"{len(r['leaves_below_80pct_coverage'])}", flush=True)
 
-    (bc.RESULTS / "conformal_cheap.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
+    (bc.RESULTS / corpus.res("conformal_cheap.json")).write_text(json.dumps(out, indent=2), encoding="utf-8")
     print("wrote results/conformal_cheap.json")
 
 

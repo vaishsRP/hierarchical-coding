@@ -582,5 +582,31 @@
   "domain_5": "Welfare and Quality of Life",
   "domain_6": "Fabric of Society",
   "domain_7": "Social Groups"
- }
+ },
+ "stance_flips": [
+  {
+   "stance": "Against immigration",
+   "sentences": 189,
+   "correct": 0.13756613756613756,
+   "flipped": 0.2698412698412698
+  },
+  {
+   "stance": "Against expanding welfare",
+   "sentences": 108,
+   "correct": 0.027777777777777776,
+   "flipped": 0.5648148148148148
+  },
+  {
+   "stance": "Against the EU",
+   "sentences": 52,
+   "correct": 0.15384615384615385,
+   "flipped": 0.5769230769230769
+  },
+  {
+   "stance": "Against the military",
+   "sentences": 53,
+   "correct": 0.37735849056603776,
+   "flipped": 0.20754716981132076
+  }
+ ]
 }

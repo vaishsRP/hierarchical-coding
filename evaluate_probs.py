@@ -44,7 +44,7 @@ KEY_METRICS = ["alpha_leaf", "macro_f1_leaf", "accuracy_leaf", "alpha_domain",
 
 
 def gold():
-    rows = [json.loads(l) for l in (corpus.mp_api.CACHE_DIR / "modelling_en_hb5.jsonl").open(encoding="utf-8")]
+    rows = [json.loads(l) for l in (corpus.MODELLING).open(encoding="utf-8")]
     return {f"{r['manifesto_id']}#{r['pos']}": r for r in rows}
 
 
@@ -199,21 +199,21 @@ def check():
     split = np.array([u["split"] for u in units])
     x = bc.embed([u["text"] or "" for u in units])
     tr, cal, te = (np.where(split == s)[0] for s in ("train", "calib", "test"))
-    c = json.loads((bc.RESULTS / "cheap_baseline.json").read_text())["cheap_baseline"]["C"]
+    c = json.loads((bc.RESULTS / corpus.res("cheap_baseline.json")).read_text())["cheap_baseline"]["C"]
     sc = StandardScaler().fit(x[tr])
     clf = LogisticRegression(C=c, max_iter=3000).fit(sc.transform(x[tr]), y[tr])
     assert list(clf.classes_) == keep
     col = {k: j for j, k in enumerate(keep)}
     ours = conformal(clf.predict_proba(sc.transform(x[cal])), np.array([col[v] for v in y[cal]]),
                      clf.predict_proba(sc.transform(x[te])), np.array([col[v] for v in y[te]]))
-    mapie = json.loads((bc.RESULTS / "conformal_cheap.json").read_text())
+    mapie = json.loads((bc.RESULTS / corpus.res("conformal_cheap.json")).read_text())
     for s, m in (("lac", "lac"), ("aps_nonrandom", "aps")):
         print(f"{s}: ours coverage {ours[s]['coverage']:.4f} review {ours[s]['human_review_load']:.4f} | "
               f"MAPIE {m} coverage {mapie[m]['coverage']:.4f} review {mapie[m]['human_review_load']:.4f}")
 
 
 def compare(names):
-    res = {n: json.loads((bc.RESULTS / f"strong_{n}.json").read_text())["summary"] for n in names}
+    res = {n: json.loads((bc.RESULTS / corpus.res(f"strong_{n}.json")).read_text())["summary"] for n in names}
     base = res[names[0]]
     verdict = {}
     for n in names[1:]:
@@ -224,7 +224,7 @@ def compare(names):
             verdict[n][m] = {"difference": diff, "margin": margin,
                              "call": "better" if diff > margin else "worse" if diff < -margin else "no difference"}
         print(n, {m: f"{v['difference']:+.4f} (margin {v['margin']:.4f}): {v['call']}" for m, v in verdict[n].items()})
-    (bc.RESULTS / "step6_comparison.json").write_text(json.dumps({"baseline": names[0], "verdict": verdict,
+    (bc.RESULTS / corpus.res("step6_comparison.json")).write_text(json.dumps({"baseline": names[0], "verdict": verdict,
                                                                   "summaries": res}, indent=2), encoding="utf-8")
 
 
@@ -253,7 +253,7 @@ def main():
         run_dirs = args.runs
     runs = {r: score_run(r, g, keep, parent, prevalence) for r in run_dirs}
     summary = summarise_runs(runs)
-    (bc.RESULTS / f"strong_{args.name}.json").write_text(json.dumps({"runs": runs, "summary": summary}, indent=2),
+    (bc.RESULTS / corpus.res(f"strong_{args.name}.json")).write_text(json.dumps({"runs": runs, "summary": summary}, indent=2),
                                                         encoding="utf-8")
     for m, v in summary.items():
         if not m.startswith("ppi_"):

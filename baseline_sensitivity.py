@@ -15,6 +15,7 @@ from sklearn.metrics import log_loss
 from sklearn.preprocessing import StandardScaler
 
 import baseline_cheap as bc
+import corpus
 
 EXTRA = {"embeddings": [0.001, 0.003], "tfidf": [30.0, 100.0]}
 
@@ -53,7 +54,7 @@ def main():
     out["tfidf"] = run("tfidf", xt, y[tr], vec.transform([texts[i] for i in dev]), y[dev],
                        vec.transform([texts[i] for i in te]), y[te], keep, parent)
 
-    (bc.RESULTS / "cheap_baseline_sensitivity.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
+    (bc.RESULTS / corpus.res("cheap_baseline_sensitivity.json")).write_text(json.dumps(out, indent=2), encoding="utf-8")
     for k, v in out.items():
         print(f"{k}: chosen C={v['chosen_C']} (edge: {v['chosen_on_edge']}), alpha {v['alpha_leaf']:.3f}, "
               f"macro F1 {v['macro_f1_leaf']:.3f}")
