@@ -158,6 +158,10 @@ def summary(leaf_names, domain_names):
         "bes": bes_block(),
         "llm_wrong_topic": json.loads((bc.RESULTS / "llm_zero_shot.json").read_text())
                            ["samples"]["random"]["llm"]["pooled_wrong_category"],
+        "big_models": {n: {m: json.loads((bc.RESULTS / f"strong_{n}.json").read_text())["summary"][m]["mean"]
+                           for m in ("cc_total_bias", "accuracy_leaf", "alpha_leaf")}
+                       for n in ("flat", "defs")},
+        "human_median_kappa": 0.46,   # Mikhaylov, Laver and Benoit (2012), coder versus master coding
     }
 
 

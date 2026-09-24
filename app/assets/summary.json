@@ -1458,5 +1458,18 @@
   "drift_max": 0.010611666666666667,
   "respondents": 116067
  },
- "llm_wrong_topic": 0.2555
+ "llm_wrong_topic": 0.2555,
+ "big_models": {
+  "flat": {
+   "cc_total_bias": 0.16538745812573155,
+   "accuracy_leaf": 0.5138615609706877,
+   "alpha_leaf": 0.4833184285203684
+  },
+  "defs": {
+   "cc_total_bias": 0.134090800471315,
+   "accuracy_leaf": 0.5183265223752586,
+   "alpha_leaf": 0.48851464198628475
+  }
+ },
+ "human_median_kappa": 0.46
 }
