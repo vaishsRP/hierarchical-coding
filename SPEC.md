@@ -261,6 +261,17 @@ Contamination check: the model may have seen the handbook and the coded
 corpus in pretraining, so results are also split into manifestos published
 before and after 2024, compared with the same split for the other models.
 
+**Second dataset (changed 2026-09-24).** GoEmotions is replaced by human
+coded open ended answers from the Dutch LISS panel, as used by Schonlau and
+colleagues (multi label coding, arXiv 2304.02945; single label "Patient Joe",
+Survey Research Methods 2020). Reasons: real survey answers, Dutch, and multi
+label, which is the ING setting GoEmotions only stood in for. Pending access:
+LISS data needs registration at lissdata.nl, and the coded versions may only
+be available from the authors. Fallback if access fails: the German survey
+motivation answers (arXiv 2506.14634, 5,072 double coded, 22 categories). The
+protocol for this dataset gets fixed here once the data and its codeframe are
+in hand, before any model runs on it.
+
 ## How it gets evaluated
 
 Three separate questions. Keeping them separate is most of the value.
@@ -302,7 +313,7 @@ leaves a result.
    baseline.
 7. Conformal abstention, report coverage and human review load.
 8. Prediction-powered inference on the aggregate.
-9. GoEmotions, variants 1 and 3 only, generalisation check.
+9. Second dataset (LISS open ended survey answers, see the dated note above), generalisation check.
 10. README with the numbers, the failure analysis, and what it means for
     the ING project.
 
