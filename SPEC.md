@@ -261,16 +261,20 @@ Contamination check: the model may have seen the handbook and the coded
 corpus in pretraining, so results are also split into manifestos published
 before and after 2024, compared with the same split for the other models.
 
-**Second dataset (changed 2026-09-24).** GoEmotions is replaced by human
-coded open ended answers from the Dutch LISS panel, as used by Schonlau and
-colleagues (multi label coding, arXiv 2304.02945; single label "Patient Joe",
-Survey Research Methods 2020). Reasons: real survey answers, Dutch, and multi
-label, which is the ING setting GoEmotions only stood in for. Pending access:
-LISS data needs registration at lissdata.nl, and the coded versions may only
-be available from the authors. Fallback if access fails: the German survey
-motivation answers (arXiv 2506.14634, 5,072 double coded, 22 categories). The
-protocol for this dataset gets fixed here once the data and its codeframe are
-in hand, before any model runs on it.
+**Second dataset (changed 2026-09-24).** GoEmotions is replaced by a real
+survey open end: the GLES panel 2016, wave 1, "What do you think is the most
+important political problem in Germany at the moment?" (GESIS ZA6838, version
+5.0.0, DOI 10.4232/1.13783; the text answers are a separate csv joined on
+lfdn). 17,584 answers, 55 codes, multi label (12.6% of answers have more than
+one), double coded with kappa 0.88 per label (Schonlau et al., arXiv
+2304.02945). It is the ING setting GoEmotions only stood in for: survey
+answers, multi label, and a real human ceiling. German rather than Dutch; the
+multilingual models already cover it.
+Considered and set aside: LISS project 284 (Meitinger and Schonlau, 2020).
+Its only coded open ends are about the survey itself (audio experience, why
+audio, why writing), with a few hundred to about 2,000 answers each.
+The protocol for GLES gets fixed here once the data and its codeframe are in
+hand, before any model runs on it.
 
 ## How it gets evaluated
 
@@ -313,7 +317,7 @@ leaves a result.
    baseline.
 7. Conformal abstention, report coverage and human review load.
 8. Prediction-powered inference on the aggregate.
-9. Second dataset (LISS open ended survey answers, see the dated note above), generalisation check.
+9. Second dataset (GLES most important problem, multi label survey open end), generalisation check.
 10. README with the numbers, the failure analysis, and what it means for
     the ING project.
 
