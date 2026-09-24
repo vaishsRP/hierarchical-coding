@@ -85,6 +85,33 @@ def stance_flips():
     return out
 
 
+BES_ISSUES = ["Europe", "Immigration", "Economy-general", "Health"]
+
+
+def bes_block():
+    """Reported share of the biggest issues per BES wave, and the switch estimate.
+    Aggregate shares only; wave dates are the median interview date."""
+    import pandas as pd
+    out = json.loads((bc.RESULTS / "bes_event_study.json").read_text())
+    codes = pd.read_pickle(corpus.mp_api.CACHE_DIR / "bes" / "mii_codes.pkl")
+    when = {}
+    for w in range(1, 31):
+        t = pd.to_datetime(codes.get(f"starttimeW{w}"), errors="coerce").dropna()
+        if len(t):
+            when[w] = str(t.median().date())
+    series = []
+    with (bc.RESULTS / "bes_gaps_by_wave.csv").open(encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            if r["name"] in BES_ISSUES and int(r["wave"]) in when:
+                series.append({"issue": r["name"].replace("-general", ""), "wave": int(r["wave"]),
+                               "date": when[int(r["wave"])], "share": float(r["bes_share"]),
+                               "coder": r["coder"]})
+    placebo = out["placebo"]["total_shift"]
+    return {"series": series, "switch_date": when[26], "shift": out["total_shift"],
+            "drift_median": float(np.median(placebo)), "drift_max": float(max(placebo)),
+            "respondents": out["respondents"]}
+
+
 def summary(leaf_names, domain_names):
     cheap = json.loads((bc.RESULTS / "cheap_baseline.json").read_text())
     agg = json.loads((bc.RESULTS / "aggregate_cheap.json").read_text())
@@ -128,6 +155,9 @@ def summary(leaf_names, domain_names):
                    "auto_accuracy": conf["lac"]["auto_coded_accuracy"], "coverage": conf["lac"]["coverage"]},
         "domains": domain_names,
         "stance_flips": stance_flips(),
+        "bes": bes_block(),
+        "llm_wrong_topic": json.loads((bc.RESULTS / "llm_zero_shot.json").read_text())
+                           ["samples"]["random"]["llm"]["pooled_wrong_category"],
     }
 
 

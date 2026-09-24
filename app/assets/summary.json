@@ -608,5 +608,855 @@
    "correct": 0.37735849056603776,
    "flipped": 0.20754716981132076
   }
- ]
+ ],
+ "bes": {
+  "series": [
+   {
+    "issue": "Health",
+    "wave": 1,
+    "date": "2014-02-25",
+    "share": 0.02467,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 1,
+    "date": "2014-02-25",
+    "share": 0.22736,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 1,
+    "date": "2014-02-25",
+    "share": 0.02479,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 1,
+    "date": "2014-02-25",
+    "share": 0.26535,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 2,
+    "date": "2014-05-28",
+    "share": 0.03704,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 2,
+    "date": "2014-05-28",
+    "share": 0.26726,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 2,
+    "date": "2014-05-28",
+    "share": 0.05389,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 2,
+    "date": "2014-05-28",
+    "share": 0.22222,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 3,
+    "date": "2014-09-25",
+    "share": 0.05772,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 3,
+    "date": "2014-09-25",
+    "share": 0.23212,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 3,
+    "date": "2014-09-25",
+    "share": 0.01624,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 3,
+    "date": "2014-09-25",
+    "share": 0.16826,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 4,
+    "date": "2015-03-15",
+    "share": 0.10543,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 4,
+    "date": "2015-03-15",
+    "share": 0.24031,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 4,
+    "date": "2015-03-15",
+    "share": 0.01944,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 4,
+    "date": "2015-03-15",
+    "share": 0.18978,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 5,
+    "date": "2015-04-18",
+    "share": 0.13112,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 5,
+    "date": "2015-04-18",
+    "share": 0.22541,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 5,
+    "date": "2015-04-18",
+    "share": 0.01943,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 5,
+    "date": "2015-04-18",
+    "share": 0.2632,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 6,
+    "date": "2015-05-10",
+    "share": 0.11961,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 6,
+    "date": "2015-05-10",
+    "share": 0.20978,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 6,
+    "date": "2015-05-10",
+    "share": 0.03511,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 6,
+    "date": "2015-05-10",
+    "share": 0.24353,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 7,
+    "date": "2016-04-25",
+    "share": 0.07703,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 7,
+    "date": "2016-04-25",
+    "share": 0.2437,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 7,
+    "date": "2016-04-25",
+    "share": 0.29998,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 7,
+    "date": "2016-04-25",
+    "share": 0.09011,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 8,
+    "date": "2016-05-30",
+    "share": 0.04659,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 8,
+    "date": "2016-05-30",
+    "share": 0.26603,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 8,
+    "date": "2016-05-30",
+    "share": 0.35175,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 8,
+    "date": "2016-05-30",
+    "share": 0.08298,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 9,
+    "date": "2016-06-26",
+    "share": 0.02117,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 9,
+    "date": "2016-06-26",
+    "share": 0.15766,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 9,
+    "date": "2016-06-26",
+    "share": 0.54833,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 9,
+    "date": "2016-06-26",
+    "share": 0.08074,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 10,
+    "date": "2016-12-02",
+    "share": 0.05395,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 10,
+    "date": "2016-12-02",
+    "share": 0.14518,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 10,
+    "date": "2016-12-02",
+    "share": 0.50141,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 10,
+    "date": "2016-12-02",
+    "share": 0.0838,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 11,
+    "date": "2017-04-27",
+    "share": 0.10146,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 11,
+    "date": "2017-04-27",
+    "share": 0.09842,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 11,
+    "date": "2017-04-27",
+    "share": 0.46517,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 11,
+    "date": "2017-04-27",
+    "share": 0.05109,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 12,
+    "date": "2017-05-22",
+    "share": 0.10769,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 12,
+    "date": "2017-05-22",
+    "share": 0.09907,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 12,
+    "date": "2017-05-22",
+    "share": 0.37171,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 12,
+    "date": "2017-05-22",
+    "share": 0.05289,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 13,
+    "date": "2017-06-13",
+    "share": 0.07579,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 13,
+    "date": "2017-06-13",
+    "share": 0.07144,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 13,
+    "date": "2017-06-13",
+    "share": 0.38602,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 13,
+    "date": "2017-06-13",
+    "share": 0.04802,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 14,
+    "date": "2018-05-11",
+    "share": 0.08683,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 14,
+    "date": "2018-05-11",
+    "share": 0.10258,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 14,
+    "date": "2018-05-11",
+    "share": 0.51451,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 14,
+    "date": "2018-05-11",
+    "share": 0.04441,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 15,
+    "date": "2019-03-19",
+    "share": 0.02156,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 15,
+    "date": "2019-03-19",
+    "share": 0.03879,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 15,
+    "date": "2019-03-19",
+    "share": 0.76658,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 15,
+    "date": "2019-03-19",
+    "share": 0.01277,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 16,
+    "date": "2019-05-31",
+    "share": 0.02906,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 16,
+    "date": "2019-05-31",
+    "share": 0.03943,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 16,
+    "date": "2019-05-31",
+    "share": 0.68711,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 16,
+    "date": "2019-05-31",
+    "share": 0.01811,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 17,
+    "date": "2019-11-06",
+    "share": 0.05757,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 17,
+    "date": "2019-11-06",
+    "share": 0.03237,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 17,
+    "date": "2019-11-06",
+    "share": 0.63391,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 17,
+    "date": "2019-11-06",
+    "share": 0.02278,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 18,
+    "date": "2019-11-27",
+    "share": 0.0864,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 18,
+    "date": "2019-11-27",
+    "share": 0.0313,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 18,
+    "date": "2019-11-27",
+    "share": 0.56259,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 18,
+    "date": "2019-11-27",
+    "share": 0.0275,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 19,
+    "date": "2019-12-17",
+    "share": 0.13234,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 19,
+    "date": "2019-12-17",
+    "share": 0.04274,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 19,
+    "date": "2019-12-17",
+    "share": 0.51453,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 19,
+    "date": "2019-12-17",
+    "share": 0.03043,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 20,
+    "date": "2020-06-11",
+    "share": 0.01908,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 20,
+    "date": "2020-06-11",
+    "share": 0.01216,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 20,
+    "date": "2020-06-11",
+    "share": 0.0453,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 20,
+    "date": "2020-06-11",
+    "share": 0.09774,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 21,
+    "date": "2021-05-13",
+    "share": 0.02924,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 21,
+    "date": "2021-05-13",
+    "share": 0.029,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 21,
+    "date": "2021-05-13",
+    "share": 0.02366,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 21,
+    "date": "2021-05-13",
+    "share": 0.10192,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 22,
+    "date": "2021-12-03",
+    "share": 0.04399,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 22,
+    "date": "2021-12-03",
+    "share": 0.09879,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 22,
+    "date": "2021-12-03",
+    "share": 0.03635,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 22,
+    "date": "2021-12-03",
+    "share": 0.05809,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 23,
+    "date": "2022-05-13",
+    "share": 0.01689,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 23,
+    "date": "2022-05-13",
+    "share": 0.05092,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 23,
+    "date": "2022-05-13",
+    "share": 0.02076,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 23,
+    "date": "2022-05-13",
+    "share": 0.13749,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 24,
+    "date": "2022-12-08",
+    "share": 0.04901,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 24,
+    "date": "2022-12-08",
+    "share": 0.08375,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 24,
+    "date": "2022-12-08",
+    "share": 0.01642,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 24,
+    "date": "2022-12-08",
+    "share": 0.18606,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 25,
+    "date": "2023-05-15",
+    "share": 0.05323,
+    "coder": "human"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 25,
+    "date": "2023-05-15",
+    "share": 0.11312,
+    "coder": "human"
+   },
+   {
+    "issue": "Europe",
+    "wave": 25,
+    "date": "2023-05-15",
+    "share": 0.01929,
+    "coder": "human"
+   },
+   {
+    "issue": "Economy",
+    "wave": 25,
+    "date": "2023-05-15",
+    "share": 0.17278,
+    "coder": "human"
+   },
+   {
+    "issue": "Health",
+    "wave": 26,
+    "date": "2024-05-12",
+    "share": 0.08626,
+    "coder": "llm"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 26,
+    "date": "2024-05-12",
+    "share": 0.19068,
+    "coder": "llm"
+   },
+   {
+    "issue": "Europe",
+    "wave": 26,
+    "date": "2024-05-12",
+    "share": 0.01273,
+    "coder": "llm"
+   },
+   {
+    "issue": "Economy",
+    "wave": 26,
+    "date": "2024-05-12",
+    "share": 0.13919,
+    "coder": "llm"
+   },
+   {
+    "issue": "Health",
+    "wave": 27,
+    "date": "2024-05-31",
+    "share": 0.11299,
+    "coder": "llm"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 27,
+    "date": "2024-05-31",
+    "share": 0.1789,
+    "coder": "llm"
+   },
+   {
+    "issue": "Europe",
+    "wave": 27,
+    "date": "2024-05-31",
+    "share": 0.01429,
+    "coder": "llm"
+   },
+   {
+    "issue": "Economy",
+    "wave": 27,
+    "date": "2024-05-31",
+    "share": 0.14535,
+    "coder": "llm"
+   },
+   {
+    "issue": "Health",
+    "wave": 28,
+    "date": "2024-06-21",
+    "share": 0.12655,
+    "coder": "llm"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 28,
+    "date": "2024-06-21",
+    "share": 0.18605,
+    "coder": "llm"
+   },
+   {
+    "issue": "Europe",
+    "wave": 28,
+    "date": "2024-06-21",
+    "share": 0.01561,
+    "coder": "llm"
+   },
+   {
+    "issue": "Economy",
+    "wave": 28,
+    "date": "2024-06-21",
+    "share": 0.13953,
+    "coder": "llm"
+   },
+   {
+    "issue": "Health",
+    "wave": 29,
+    "date": "2024-07-08",
+    "share": 0.13905,
+    "coder": "llm"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 29,
+    "date": "2024-07-08",
+    "share": 0.17989,
+    "coder": "llm"
+   },
+   {
+    "issue": "Europe",
+    "wave": 29,
+    "date": "2024-07-08",
+    "share": 0.01258,
+    "coder": "llm"
+   },
+   {
+    "issue": "Economy",
+    "wave": 29,
+    "date": "2024-07-08",
+    "share": 0.15174,
+    "coder": "llm"
+   },
+   {
+    "issue": "Health",
+    "wave": 30,
+    "date": "2025-05-10",
+    "share": 0.06538,
+    "coder": "llm"
+   },
+   {
+    "issue": "Immigration",
+    "wave": 30,
+    "date": "2025-05-10",
+    "share": 0.25014,
+    "coder": "llm"
+   },
+   {
+    "issue": "Europe",
+    "wave": 30,
+    "date": "2025-05-10",
+    "share": 0.00887,
+    "coder": "llm"
+   },
+   {
+    "issue": "Economy",
+    "wave": 30,
+    "date": "2025-05-10",
+    "share": 0.15409,
+    "coder": "llm"
+   }
+  ],
+  "switch_date": "2024-05-12",
+  "shift": 0.0177505714628438,
+  "drift_median": 0.00766375,
+  "drift_max": 0.010611666666666667,
+  "respondents": 116067
+ },
+ "llm_wrong_topic": 0.2555
 }
