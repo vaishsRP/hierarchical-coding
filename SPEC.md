@@ -276,8 +276,34 @@ Optional multi label extension: GLES 2016 wave 1 "most important problem"
 Considered and set aside: LISS project 284 (coded open ends are only about the
 survey itself), ANES 2008 open ended coding (multi label but about 2,000
 respondents), Dutch election studies (open answers often not released).
-The BES protocol (wave, sample, parents of the 50 codes) gets fixed here once
-the data and codebook are in hand, before any model runs on it.
+The BES protocol is fixed in the next note.
+
+**BES protocol (fixed 2026-09-24, before any model ran on BES).**
+Data: BES internet panel waves 1 to 31, most important issue. Waves 1 to 25
+are labelled "MII manual coding" in the panel file (human, software assisted);
+waves 26 to 31 are "LLM Coded". Both use the same 49 categories and the same
+12 broad groups. About 26,000 to 31,000 coded answers per wave. No answer is
+coded both ways, so the switch is studied as an event.
+Terms: BES open text is personal data and may not be given to third parties,
+so all BES processing stays on this laptop (no Groq, no Kaggle), and no BES
+text is committed or shown.
+Design: respondents (panel id) are split once, seed 20260924, into 70% train
+and 30% evaluation, so nobody's answers are on both sides. The cheap pipeline
+(bge small embeddings, logistic regression, C chosen on a 10% dev slice of the
+train respondents by log loss) is trained on the train respondents' answers
+from waves 1 to 25 only. It is then applied to the evaluation respondents in
+every wave 1 to 31. For wave w and category k, gap(w, k) is the BES share
+minus the model's share, with model shares from averaged probabilities (the
+model's own bias cancels in the comparison; counting top guesses is reported
+as a check).
+Estimate: for each category, the mean gap over waves 26 to 31 minus the mean
+gap over waves 20 to 25, with a bootstrap CI over evaluation respondents;
+total shift is the sum of absolute category shifts over two. Stability check:
+all gaps for waves 1 to 25 are plotted, and the slope of each category's gap
+over waves 14 to 25 is reported, so a drifting baseline is visible rather
+than assumed away.
+Caveats to report: the human codes were software assisted; waves 25 and 26
+are a year apart; BES's LLM, prompt and settings are not known here.
 
 ## How it gets evaluated
 
