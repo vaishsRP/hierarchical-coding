@@ -23,7 +23,8 @@ Short answer: no, but a small hand checked sample fixes them.
 
 - **Errors pile up on common topics.** 32 of 63 topics are significantly off.
 - **A better model gave worse percentages.** DeBERTa never predicts 17 topics.
-- **The codebook's definitions help; its tree structure does not.**
+- **The codebook's definitions help; its tree structure does not.** This holds
+  in Dutch too, even with English definitions.
 - **Trained models flip stance** (anti EU tagged as pro EU up to 79% of the
   time). The LLM gets stance right but the percentages worst.
 - **Checking 5% by hand** brings the error from 12.6% to 0.9%.

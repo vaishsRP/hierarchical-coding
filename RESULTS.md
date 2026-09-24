@@ -165,13 +165,19 @@ change.
 
 Netherlands and Flanders, 62 categories, same protocol.
 
-| Dutch test set | Cheap model | mDeBERTa (3 seeds) |
-|---|---|---|
-| alpha | 0.380 | **0.402** |
-| Macro F1 | **0.252** | 0.195 |
-| Wrong category, top guess | **18.8%** | 20.5% |
-| Wrong category, averaged | 11.2% | 11.1% |
-| Review load at 90% | 99.6% | 99.9% |
+| Dutch test set | Cheap model | mDeBERTa (3 seeds) | mDeBERTa reading the definitions |
+|---|---|---|---|
+| alpha | 0.380 | 0.402 | **0.412** |
+| Macro F1 | **0.252** | 0.195 | 0.249 |
+| Wrong category, top guess | 18.8% | 20.5% | **16.5%** |
+| Wrong category, averaged | 11.2% | **11.1%** | 11.4% |
+| Review load at 90% | 99.6% | 99.9% | |
+
+The definitions variant beats flat mDeBERTa under the step 6 rule (alpha +0.010
+against a margin of 0.005; macro F1 +0.054 against 0.011), even though the
+Dutch sentences are scored against the English handbook definitions. A dev
+only sensitivity check on the Dutch cheap model picks C = 0.003 (alpha 0.379),
+so the pre-registered Dutch baseline stands.
 
 Checking 5% by hand brings the error from 18.8% to 0.7% (10%: 0.5%; 20%: 0.4%),
 with margins holding 92 to 98% of the time for categories above 2%. Every
@@ -234,7 +240,5 @@ Everything ran locally; no BES text left the laptop.
 
 ## What is pending
 
-- Dutch definitions variant (running on Kaggle).
-- Dutch C sensitivity check (the Dutch cheap fit chose C on the grid edge).
 - The human ceiling: these alphas against published agreement between human
   coders on the Manifesto scheme (Mikhaylov, Laver and Benoit, 2012).
