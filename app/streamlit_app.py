@@ -71,7 +71,8 @@ st.markdown(
     f"The result everyone reports is a percentage: **how much of a manifesto is about welfare, the economy, "
     f"immigration.** I trained a model to do the tagging on {summary['test']['sentences']:,} sentences from "
     f"{summary['test']['manifestos']} manifestos it had never seen. It tags about "
-    f"**{summary['item']['accuracy']:.0%} of sentences correctly.** So are its percentages right?"
+    f"**{summary['item']['accuracy']:.0%} of sentences correctly**, about as well as a trained human coder. "
+    f"So are its percentages right?"
 )
 
 # ------------------------------------------------------------------ the key chart

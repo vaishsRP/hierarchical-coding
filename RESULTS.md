@@ -238,7 +238,22 @@ Everything ran locally; no BES text left the laptop.
 - A first run wrongly used a 3 value label as wave 31 text; wave 31 is dropped
   (dated note in SPEC.md).
 
-## What is pending
+## The human ceiling
 
-- The human ceiling: these alphas against published agreement between human
-  coders on the Manifesto scheme (Mikhaylov, Laver and Benoit, 2012).
+Mikhaylov, Laver and Benoit (2012) had trained coders code two CMP training
+texts and compared each coder with the CMP master coding.
+
+| Agreement with the expert master coding | Chance corrected agreement |
+|---|---|
+| Trained human coders, median | kappa 0.46 (UK text 0.43, NZ text 0.54) |
+| Best and worst human coder | 0.74 and 0.22 |
+| Human coders with each other, 56 categories | kappa 0.31 to 0.47 |
+| Our models on the English test manifestos | alpha 0.475 to 0.489 |
+
+The models agree with the experts about as well as a typical trained human
+coder does, and on harder text: the human test texts were chosen for their
+clarity, ours are whole manifestos from unseen parties. Caveats: an older
+handbook, two short texts, and Cohen's kappa against Krippendorff's alpha
+(close on data this size). So the question shifts from "is the model good
+enough" to "compared to what": human coding is noisy too, and both distort the
+percentages unless corrected.
