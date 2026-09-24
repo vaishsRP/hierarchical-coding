@@ -26,7 +26,9 @@ st.set_page_config(page_title="Can you trust the percentages?", layout="centered
 
 
 @st.cache_data
-def load_assets():
+def load_assets(version):
+    """`version` is the files' modification times, so a redeploy with new
+    assets is not served from the old cache."""
     summary = json.loads((ASSETS / "summary.json").read_text(encoding="utf-8"))
     names = json.loads((ASSETS / "category_names.json").read_text(encoding="utf-8"))
     return summary, names
@@ -55,7 +57,7 @@ def big_number(label, value, note=""):
             st.caption(note)
 
 
-summary, names = load_assets()
+summary, names = load_assets(tuple(f.stat().st_mtime for f in sorted(ASSETS.glob("*.json"))))
 c = colors()
 ppi = summary["ppi"]
 wrong_small = ppi["0.05"]["model_only"]
