@@ -27,6 +27,8 @@ import numpy as np
 import baseline_cheap as bc
 import corpus
 
+assert corpus.LANG == "english", "the LLM comparison is English only: run without HC_LANG=dutch"
+
 MODEL = "openai/gpt-oss-120b"
 URL = "https://api.groq.com/openai/v1/chat/completions"
 KEY = corpus.mp_api.ROOT / "groq_apikey.txt"

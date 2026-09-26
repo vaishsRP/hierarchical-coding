@@ -14,7 +14,7 @@ Protocol (fixed in SPEC.md before this was run):
   - no class reweighting, as in step 3
 
 Writes <out>/probs.npz (dev, calib and test probabilities with unit ids)
-and <out>/log.json. Scoring is done by score_predictions.py.
+and <out>/log.json. Scoring is done by evaluate_probs.py.
 
 Usage: python train_encoder.py --seed 0 --out runs/deberta_s0
 """

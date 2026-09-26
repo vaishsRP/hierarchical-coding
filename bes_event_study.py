@@ -2,13 +2,14 @@
 shares of "most important issue"? Protocol fixed in SPEC.md ("BES protocol").
 
 A model trained on human coded waves 1 to 25 is one consistent coder across
-all 31 waves. Before the switch, the gap between BES's shares and the model's
+all 30 waves. Before the switch, the gap between BES's shares and the model's
 shares is the model's own bias; after the switch it is that bias plus the
 effect of LLM coding. The change in the gap estimates the switch.
 
 Everything runs locally (BES terms: no third parties). Inputs, all gitignored:
-  data/raw/bes/mii_codes.pkl                 codes per wave (from the panel file)
-  Downloads/BES2024_W30Strings_v30.1.dta     text, waves 1 to 30
+  data/raw/bes/mii_codes.pkl                 codes per wave (python extract_bes.py)
+  $BES_DIR/BES2024_W30Strings_v30.1.dta      text, waves 1 to 30 (BES_DIR defaults
+                                             to your Downloads folder)
 Wave 31 is left out: its text is not in the strings file, and the `mii`
 column of the single wave file is a 3 value label, not the answer text.
 Outputs (aggregate shares only, no text):
@@ -27,12 +28,15 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import log_loss
 from sklearn.preprocessing import StandardScaler
 
+import os
+
 import baseline_cheap as bc
 import corpus
 
-DOWNLOADS = Path.home() / "Downloads"
-PANEL = DOWNLOADS / "BES2024_W31_Panel_v31.05.dta"
-STRINGS = DOWNLOADS / "BES2024_W30Strings_v30.1.dta"
+assert corpus.LANG == "english", "BES is English: run without HC_LANG=dutch"
+BES_DIR = Path(os.environ.get("BES_DIR", Path.home() / "Downloads"))
+PANEL = BES_DIR / "BES2024_W31_Panel_v31.05.dta"
+STRINGS = BES_DIR / "BES2024_W30Strings_v30.1.dta"
 CODES = corpus.mp_api.CACHE_DIR / "bes" / "mii_codes.pkl"
 LONG = corpus.mp_api.CACHE_DIR / "bes" / "mii_long.pkl"
 SEED = 20260924

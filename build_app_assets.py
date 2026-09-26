@@ -24,6 +24,8 @@ import baseline_cheap as bc
 import build_codeframe
 import corpus
 
+assert corpus.LANG == "english", "the app is built from the English results: run without HC_LANG=dutch"
+
 OUT = corpus.mp_api.ROOT / "app" / "assets"
 TARGET = 0.90
 
@@ -90,10 +92,15 @@ BES_ISSUES = ["Europe", "Immigration", "Economy-general", "Health"]
 
 def bes_block():
     """Reported share of the biggest issues per BES wave, and the switch estimate.
-    Aggregate shares only; wave dates are the median interview date."""
+    Aggregate shares only; wave dates are the median interview date. Without the
+    local BES extract, the block already in app/assets/summary.json is kept."""
     import pandas as pd
+    extract = corpus.mp_api.CACHE_DIR / "bes" / "mii_codes.pkl"
+    if not extract.exists():
+        old = OUT / "summary.json"
+        return json.loads(old.read_text(encoding="utf-8")).get("bes") if old.exists() else None
     out = json.loads((bc.RESULTS / "bes_event_study.json").read_text())
-    codes = pd.read_pickle(corpus.mp_api.CACHE_DIR / "bes" / "mii_codes.pkl")
+    codes = pd.read_pickle(extract)
     when = {}
     for w in range(1, 31):
         t = pd.to_datetime(codes.get(f"starttimeW{w}"), errors="coerce").dropna()

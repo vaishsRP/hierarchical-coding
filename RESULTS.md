@@ -83,7 +83,7 @@ the number that matters needs the strong model.
 | none | predictions only (CC) | 0.126 | 0.014 | no CI | |
 | 5% | labels only | 0.008 | 0.023 | 0.68 / 0.74 | 0.038 |
 | 5% | PPI | 0.009 | 0.024 | 0.84 / 0.89 | 0.048 |
-| 10% | labels only | 0.005 | 0.018 | 0.76 / 0.84 | 0.032 |
+| 10% | labels only | 0.004 | 0.018 | 0.76 / 0.83 | 0.032 |
 | 10% | PPI | 0.006 | 0.019 | 0.88 / 0.93 | 0.041 |
 | 20% | labels only | 0.004 | 0.012 | 0.84 / 0.91 | 0.025 |
 | 20% | PPI | 0.005 | 0.013 | 0.93 / 0.96 | 0.033 |
@@ -115,7 +115,8 @@ with the same code as everything above.
 What happened:
 
 1. **The strong model is only stronger on common categories.** It never
-   predicts 17 of the 63 leaves and scores F1 0 on 20. By training frequency,
+   predicts 19 of the 63 leaves (mean of three seeds; 17 in seed 0) and scores
+   F1 0 on 20. By training frequency,
    the rarest third of leaves gets F1 0.03 against 0.16 for the cheap model,
    while the commonest third is level (0.50 and 0.49). It is also overconfident:
    mean top probability 0.65 at 51% accuracy.
@@ -152,7 +153,7 @@ only if it beats flat by more than the seed spread (rule fixed in SPEC.md).
 | Test set, mean of 3 seeds | alpha | Macro F1 | Wrong category, top guess | Wrong category, averaged | Verdict |
 |---|---|---|---|---|---|
 | Flat DeBERTa | 0.483 | 0.239 | 16.5% | 10.2% | reference |
-| Hierarchy in the output (domain, then category) | 0.484 | 0.244 | 16.9% | 10.1% | no difference |
+| Hierarchy in the output (domain, then category) | 0.484 | 0.244 | 16.8% | 10.1% | no difference |
 | **Hierarchy in the input (handbook definitions)** | **0.489** | **0.283** | **13.4%** | **9.2%** | **better** |
 
 The strict "domain first" decode of the output variant scores the same (alpha
@@ -204,11 +205,10 @@ the same sentences.
 | Against the EU | **87% / 6%** | 15% / 58% |
 | Against the military | 26% / 6% | 38% / 21% |
 
-- The LLM is the only model that gets stance right, because it reads meaning
-  instead of learning which side is common.
-- It is also the worst at the percentages, by about double. It uses the
-  categories differently from the Manifesto coders, so its errors are
-  systematic too, just not in the direction of common topics.
+- The LLM gets the side right far more often for immigration and the EU, but
+  not for welfare or the military, where it mostly picks other topics.
+- It is also the worst at the percentages, by about double. It was given the
+  topic names only (no definitions), which may explain part of this.
 - No sign of memorisation: accuracy is 40.2% before 2024 and 39.8% on 2024
   manifestos (n = 118, a weak test; the model's training data reportedly runs
   to about mid 2024).
@@ -225,11 +225,15 @@ Everything ran locally; no BES text left the laptop.
 
 | | Content that moved category |
 |---|---|
-| At the switch (waves 20 to 25 against 26 to 30) | **1.8%** (95% CI 1.7 to 2.0) |
+| At the switch (waves 20 to 25 against 26 to 30) | **1.8%** (95% CI 1.7 to 2.0, respondent sampling only) |
 | At fake switch points inside the hand coded waves | median 0.8%, largest 1.1% |
 
-- The switch moved about 1.8% of reported answers between categories, roughly
-  one point more than normal drift. Largest shifts: Uncoded +0.45 points,
+- The net share of answers in each category shifted by about 1.8% in total,
+  roughly one point more than normal drift (the placebo was added after the
+  first run). This is a net change, so at least that many answers were coded
+  differently; it cannot be fully separated from topic mix (Coronavirus
+  vanished) or from the fixed coder ageing out of its training years.
+- The share of answers left uncoded rose from 0.56% to 7.41% at the switch. Largest shifts: Uncoded +0.45 points,
   Coronavirus -0.28. Living costs (-0.23) is not trustworthy: it was already
   drifting before the switch.
 - Compared with the manifestos (zero shot LLM: 25.6% in the wrong category),
@@ -250,10 +254,52 @@ texts and compared each coder with the CMP master coding.
 | Human coders with each other, 56 categories | kappa 0.31 to 0.47 |
 | Our models on the English test manifestos | alpha 0.475 to 0.489 |
 
-The models agree with the experts about as well as a typical trained human
-coder does, and on harder text: the human test texts were chosen for their
-clarity, ours are whole manifestos from unseen parties. Caveats: an older
+Context only, not a like for like comparison: the humans were compared with an
+expert master coding, the models with the Manifesto Project's single production
+coder, whose habits a model can partly learn. Caveats: an older
 handbook, two short texts, and Cohen's kappa against Krippendorff's alpha
-(close on data this size). So the question shifts from "is the model good
-enough" to "compared to what": human coding is noisy too, and both distort the
-percentages unless corrected.
+(they can differ when category shares differ). Human coding is noisy too, but
+this project did not measure how much human coding distorts percentages.
+
+## Checked after review (2026-09-26)
+
+Four independent reviews read the finished project. These checks were added
+afterwards, so they are not pre-registered.
+
+**Lean and noise.** "Total bias" is the lean: the systematic error left after
+averaging many manifestos. A single manifesto's error is larger.
+
+| English | Lean | Error in one manifesto |
+|---|---|---|
+| Small model alone | 12.6% | 22.8% |
+| Small model plus 5% hand check (PPI) | 0.9% | 35.0% |
+| 5% hand check alone | 0.8% | 33.0% |
+| Small model plus 20% hand check (PPI) | 0.5% | 19.2% |
+| DeBERTa alone | 16.5% | 25.6% |
+| DeBERTa reading the definitions alone | 13.4% | 23.6% |
+
+A hand check removes the lean but, for one manifesto with a 5% sample, adds
+noise. The earlier wording "brings the error under 1%" described the lean
+only. At this accuracy the hand checked sample alone does about as well as PPI.
+
+**Differences between models, with 95% intervals** (paired bootstrap over the
+24 test manifestos, 2,000 resamples; `bootstrap_compare.py`):
+
+| | Agreement (alpha) | Macro F1 | Lean |
+|---|---|---|---|
+| DeBERTa minus small model | +0.008 (-0.003 to +0.016) | -0.063 (-0.076 to -0.049) | +3.9 points (+2.5 to +5.2) |
+| Definitions minus DeBERTa | +0.005 (+0.001 to +0.011) | +0.044 (+0.036 to +0.048) | -3.1 points (-3.8 to -1.9) |
+
+So DeBERTa's gain in agreement is not reliable, while its losses on rare topics
+and lean are. The earlier headline "a better model gave worse percentages"
+overstated it: DeBERTa is not clearly better. The definitions variant is
+reliably better on all three, but it also changes the model's design (a dual
+encoder), so the gain is not only the definitions' words.
+
+**Other corrections.** The BES data has 853,152 coded answers once wave 31 is
+dropped (884,544 included it). "32 of 63 topics significantly off" is not
+corrected for testing 63 topics at once and is dropped from the summaries. In
+Dutch only the definitions variant was run, and it does not beat flat
+mDeBERTa on averaged probabilities (11.4% against 11.1%). Error margins are
+95% intervals; their hit rate is quoted for topics above 2% of a manifesto
+(over all topics: 84%, 88% and 93%).

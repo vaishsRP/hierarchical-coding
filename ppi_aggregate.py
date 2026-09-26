@@ -24,6 +24,11 @@ Protocol (fixed in SPEC.md before this was run):
     no example, the CLT interval collapses to zero width, and all-pairs
     coverage then mixes trivially correct zeros with real misses
   - shares are over modelled units only, as in step 4
+  - added after review (2026-09-26): mean document error, the share of one
+    manifesto's content in the wrong topic for a single estimate (sum of
+    absolute errors over topics / 2, averaged over documents and draws). Total
+    bias is the systematic part left after averaging over many manifestos;
+    document error is what one estimate of one manifesto gets wrong
 
 Writes results/ppi_cheap.json.
 """
@@ -51,6 +56,7 @@ def ppi_budgets(Y, F, doc_ids, verbose=True):
     out = {}
     for budget in BUDGETS:
         err = {"cc": [], "labels": [], "ppi": []}
+        doc_err = {"cc": [], "labels": [], "ppi": []}
         cover = {"labels": [], "ppi": []}
         big = []
         width = {"labels": [], "ppi": []}
@@ -74,6 +80,8 @@ def ppi_budgets(Y, F, doc_ids, verbose=True):
                 err["cc"].append(cc - truth)
                 err["labels"].append(lab - truth)
                 err["ppi"].append(ppi - truth)
+                for name, est in (("cc", cc), ("labels", lab), ("ppi", ppi)):
+                    doc_err[name].append(np.abs(est - truth).sum() / 2)
                 for name, est, half in (("labels", lab, half_lab), ("ppi", ppi, half_ppi)):
                     cover[name].append(np.abs(est - truth) <= half)
                     width[name].append(2 * half)
@@ -81,6 +89,7 @@ def ppi_budgets(Y, F, doc_ids, verbose=True):
         for name, e in err.items():
             e = np.array(e)
             res[name] = {"total_bias": float(np.abs(e.mean(axis=0)).sum() / 2),
+                         "mean_document_error": float(np.mean(doc_err[name])),
                          "rmse": float(np.sqrt((e ** 2).mean()))}
             if name in cover:
                 cv = np.array(cover[name])
@@ -90,7 +99,7 @@ def ppi_budgets(Y, F, doc_ids, verbose=True):
         out[str(budget)] = res
         if verbose:
             print(f"budget {budget:.0%}: " + " | ".join(
-            f"{k} bias={v['total_bias']:.4f} rmse={v['rmse']:.4f}"
+            f"{k} bias={v['total_bias']:.4f} doc_err={v['mean_document_error']:.4f} rmse={v['rmse']:.4f}"
             + (f" cov={v['ci95_coverage']:.3f}/{v['ci95_coverage_share_ge_2pct']:.3f} width={v['mean_ci_width']:.4f}" if "ci95_coverage" in v else "")
             for k, v in res.items()), flush=True)
     return out

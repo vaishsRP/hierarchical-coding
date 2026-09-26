@@ -1,7 +1,8 @@
 """Write the modelling set as one self-contained file, so a GPU machine needs
 only this file and train_encoder.py (no API key, no raw download).
 
-Output: data/raw/modelling_en_hb5.jsonl, one line per modelled unit:
+Output: data/raw/modelling_en_hb5.jsonl (modelling_nl_hb5.jsonl with
+HC_LANG=dutch), one line per modelled unit:
   manifesto_id, pos, country, split, label, text
 It holds Manifesto Project text, so it stays out of git (data/raw/ is ignored)
 and must not be shared further.

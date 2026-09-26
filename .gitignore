@@ -10,3 +10,13 @@ data/manifesto_metadata.csv
 data/splits*.csv
 runs/
 groq_apikey.txt
+# secrets and local data, belt and braces
+*apikey*.txt
+.env
+.streamlit/secrets.toml
+kaggle.json
+*.dta
+*.pkl
+*.npz
+!app/assets/model.npz
+.ipynb_checkpoints/

@@ -4,7 +4,8 @@ Pulls every annotated manifesto in these languages, under every handbook
 version, so the counts can compare version 5 against the cost of widening.
 
 Outputs
-  data/manifesto_metadata.csv          one row per manifesto (committed)
+  data/manifesto_metadata.csv          one row per manifesto (not committed:
+                                       Manifesto Project terms)
   data/raw/quasi_sentences.jsonl       one row per quasi-sentence (not committed)
 """
 

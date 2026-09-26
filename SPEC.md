@@ -329,6 +329,15 @@ every English test sentence whose code is one of the four "against" stances
 test stance flips. Batches of 20 sentences per request; an answer that is not
 one of the 63 codes counts as wrong.
 
+**Note, 2026-09-26, after an outside review (not pre-registered).** Added:
+per manifesto error next to total bias, a paired bootstrap over test
+manifestos for the main model comparisons (`bootstrap_compare.py`), and
+`extract_bes.py` so the BES step can be rerun. Wording in README, RESULTS and
+the app was corrected where it overstated: total bias is a systematic lean,
+not the error of one manifesto; DeBERTa's gain in alpha is not significant;
+the BES shift is a net change not separable from topic mix; the human ceiling
+is context only. GoEmotions and wave 31 notes above are superseded.
+
 ## How it gets evaluated
 
 Three separate questions. Keeping them separate is most of the value.

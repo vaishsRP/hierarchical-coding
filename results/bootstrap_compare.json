@@ -1,0 +1,40 @@
+{
+  "documents": 24,
+  "resamples": 2000,
+  "comparisons": {
+    "deberta_flat minus cheap": {
+      "alpha": {
+        "difference": 0.007834760058891665,
+        "ci_low": -0.003381097787345738,
+        "ci_high": 0.015587372019627342
+      },
+      "macro_f1": {
+        "difference": -0.06345786811410462,
+        "ci_low": -0.076262615155027,
+        "ci_high": -0.04905519576447896
+      },
+      "total_bias": {
+        "difference": 0.039169607984546134,
+        "ci_low": 0.025220886328044517,
+        "ci_high": 0.052408469057026466
+      }
+    },
+    "deberta_definitions minus deberta_flat": {
+      "alpha": {
+        "difference": 0.005196213465916533,
+        "ci_low": 0.000753907825818656,
+        "ci_high": 0.010913082254135755
+      },
+      "macro_f1": {
+        "difference": 0.04404058006552422,
+        "ci_low": 0.036182458981248826,
+        "ci_high": 0.04835031005559414
+      },
+      "total_bias": {
+        "difference": -0.031296657654416554,
+        "ci_low": -0.03838805178040596,
+        "ci_high": -0.018677046007829948
+      }
+    }
+  }
+}

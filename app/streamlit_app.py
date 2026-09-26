@@ -60,7 +60,7 @@ def number_card(label, value, note=""):
             st.caption(note)
 
 
-summary, names = load_assets(tuple(f.stat().st_mtime for f in sorted(ASSETS.glob("*.json"))))
+summary, names = load_assets(tuple(f.stat().st_mtime for f in sorted(ASSETS.glob("*"))))
 c = colors()
 ppi = summary["ppi"]
 wrong = ppi["0.05"]["model_only"]
@@ -71,18 +71,20 @@ bes = summary["bes"]
 # ------------------------------------------------------------------ the answer first
 st.title("Can you trust the percentages?")
 st.markdown(
-    "When a computer sorts text into topics, what people report is a percentage: *how much of this "
-    "manifesto is about the economy*, *how many survey answers mention prices*. "
-    "I tested whether those percentages can be trusted."
+    "Researchers and pollsters sort text into topics (this is called coding) and then report percentages: "
+    "*how much of this manifesto is about the economy*, *how many voters name prices as the top issue*. "
+    "I tested whether those percentages stay right when AI does the sorting."
 )
 with st.container(border=True):
     st.markdown("**What I found**")
     st.markdown(
-        f"1. **Not on their own.** A model that tags sentences about as well as a trained human still files "
-        f"{wrong:.0%} of a manifesto under the wrong topic, and a bigger model does worse.\n"
-        f"2. **A small hand check fixes it.** Checking 5% of each manifesto brings the error to {fixed:.1%}.\n"
-        f"3. **Short survey answers are easier.** When a major survey switched from human to AI coding, "
-        f"its numbers barely moved."
+        f"1. **Not on their own.** The AI sorts about half of all sentences correctly. Many mistakes cancel "
+        f"out, but what is left leans towards common topics: {wrong:.1%} of a manifesto ends up in the wrong place.\n"
+        f"2. **A bigger model did not help.** It leaned even harder.\n"
+        f"3. **A person checking a small random sample removes the lean**, when many documents or a large "
+        f"survey are counted together.\n"
+        f"4. **Short survey answers are easier.** When a major survey switched from human to AI coding, "
+        f"its numbers moved only a little."
     )
 
 manifestos, survey, try_it = st.tabs(["Manifestos", "Survey answers", "Try it yourself"])
@@ -117,23 +119,25 @@ with manifestos:
     )
     st.altair_chart((rule + dots).properties(height=340), use_container_width=True)
     st.markdown(
-        "Mistakes do not cancel out. The model **inflates common topics** and **shrinks rare ones**, "
+        "Mistakes only partly cancel out. What is left leans one way: the AI **tends to inflate common topics** "
+        "and **shrink rare ones**, "
         f"so across all topics {wrong:.1%} of an average manifesto ends up in the wrong place."
     )
 
-    st.subheader("2. A better model makes it worse")
+    st.subheader("2. A bigger model does not help")
     a, b = st.columns(2)
     with a:
-        number_card("Small model", f"{wrong:.1%}", "filed under the wrong topic")
+        number_card("Lean, small model", f"{wrong:.1%}", "averaged over many manifestos")
     with b:
-        number_card("Bigger, fine tuned model", f"{big['flat']['cc_total_bias']:.1%}", "filed under the wrong topic")
+        number_card("Lean, bigger model", f"{big['flat']['cc_total_bias']:.1%}", "averaged over many manifestos")
     st.markdown(
-        "The bigger model tags slightly more sentences correctly, but it gets there by betting on common "
-        "topics, which inflates them further. It never picks 17 of the 63 topics at all."
+        "The bigger model is not reliably better at sorting sentences. It bets harder on common topics and "
+        "never picks 19 of the 63 topics at all, so its percentages lean more."
     )
 
     st.subheader("3. Topic right, side wrong")
-    st.markdown("The small model usually finds the topic, then picks whichever side it saw more often in training.")
+    st.markdown("The AI often finds the topic but picks the side it saw more often in training. "
+                "Rows do not add up to 100% because the rest went to other topics.")
     flips = pd.DataFrame(summary["stance_flips"])
     st.dataframe(pd.DataFrame({
         "Sentences that are": flips["stance"],
@@ -141,8 +145,8 @@ with manifestos:
         "Tagged as the opposite side": (100 * flips["flipped"]).round().astype(int).astype(str) + "%",
     }), hide_index=True, use_container_width=True)
     st.caption(
-        f"An AI chatbot model gets the side right far more often, but misfiles "
-        f"{summary['llm_wrong_topic']:.0%} of the content overall, the worst of all."
+        f"A general AI chatbot model gets the side right far more often for immigration and the EU, "
+        f"but misfiles the most content overall ({summary['llm_wrong_topic']:.1%})."
     )
 
     st.subheader("4. The fix: a person checks a small sample")
@@ -154,9 +158,14 @@ with manifestos:
     row = ppi[str(int(pick[:-1]) / 100)]
     a, b = st.columns(2)
     with a:
-        number_card("Model alone", f"{row['model_only']:.1%}", "filed under the wrong topic")
+        number_card("Lean, AI alone", f"{row['model_only']:.1%}", "averaged over many manifestos")
     with b:
-        number_card(f"With {pick} checked", f"{row['with_checks']:.1%}", "filed under the wrong topic")
+        number_card(f"Lean, with {pick} checked", f"{row['with_checks']:.1%}", "averaged over many manifestos")
+    st.caption(
+        "This removes the lean that shows up when many manifestos are counted together. For one short "
+        "manifesto, a small sample is too few sentences and adds its own noise, so the check pays off "
+        "for large counts."
+    )
 
 # ------------------------------------------------------------------ survey answers
 with survey:
@@ -235,10 +244,10 @@ with try_it:
 st.divider()
 st.subheader("What this means")
 st.markdown(
-    f"Automated coding is about as accurate as a human coder, and that is exactly the problem: humans agree "
-    f"with expert coding only about half the time beyond chance too. Neither gives trustworthy percentages "
-    f"on its own. The fix is cheap: have a person check a small random sample and correct the totals. "
-    f"That turns a {wrong:.0%} error into under 1%, with error margins you can report."
+    f"Do not report raw AI counts. The AI's mistakes lean one way, and a bigger model does not fix that. "
+    f"Have a person check a small random sample, correct the totals and report a margin of error. "
+    f"That removes the {wrong:.1%} lean, and it is cheap when you count many documents or a large survey, "
+    f"which is when percentages matter most."
 )
 st.caption(
     "Data: Manifesto Project (WZB), 2021 coding handbook; British Election Study internet panel "
